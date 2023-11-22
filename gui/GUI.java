@@ -5,14 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 
 public class GUI extends Application {
-    private Button createSnippetButton, findSnippetButton;
+    private Button saveSnippetButton, findSnippetButton;
     private VBox startRoot;
     private Stage mainStage;
 
@@ -22,7 +27,7 @@ public class GUI extends Application {
         initializeComponents();
 
         VBox root = new VBox();
-        root.getChildren().addAll(createSnippetButton, findSnippetButton);
+        root.getChildren().addAll(saveSnippetButton, findSnippetButton);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(20);
         startRoot = root;
@@ -40,16 +45,23 @@ public class GUI extends Application {
     }
 
     private void initializeComponents() {
-        createSnippetButton = new Button("Save");
+        saveSnippetButton = new Button("Save");
         findSnippetButton = new Button("Find");
 
         // Instead of a Lambda, use anonymous inner class
-        // createSnippetButton.setOnAction(e -> switchToCreateNewScreen());
+        // saveSnippetButton.setOnAction(e -> switchToCreateNewScreen()); <- THIS IS A LAMBDA
 
-        createSnippetButton.setOnAction(new EventHandler<ActionEvent>() {
+        saveSnippetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent newEvent) {
                 switchToCreateNewScreen();
+            }
+        });
+
+        findSnippetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent newEvent) {
+                findGUI();
             }
         });
     }
@@ -63,12 +75,30 @@ public class GUI extends Application {
         mainStage.getScene().setRoot(newRoot);
     }
 
+    private void findGUI() { //TODO: proportions
+        HBox top = new HBox();
+        AnchorPane left = new AnchorPane();
+        AnchorPane right = new AnchorPane();
+        
+        //HBox.setHgrow(right, Priority.ALWAYS);
+        top.getChildren().add(left);
+        top.getChildren().add(right);
+
+        TextField keywordsField = new TextField("Keywords");
+        TextField languageField = new TextField("Language");
+
+        left.getChildren().add(keywordsField);
+        right.getChildren().add(languageField);
+        
+        mainStage.getScene().setRoot(top);
+    }
+
     private void updateFontSizes(double stageWidth) {
         Font font = new Font("Arial", stageWidth / 12);
-        createSnippetButton.setFont(font);
+        saveSnippetButton.setFont(font);
         findSnippetButton.setFont(font);
 
-        createSnippetButton.setPrefWidth(stageWidth / 1.5);
+        saveSnippetButton.setPrefWidth(stageWidth / 1.5);
         findSnippetButton.setPrefWidth(stageWidth / 1.5);
 
         startRoot.setSpacing(stageWidth / 15);
