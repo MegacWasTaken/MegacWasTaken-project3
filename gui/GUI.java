@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class snippet_gui_main extends Application
+public class GUI extends Application
 {
     private Button createSnippetButton, findSnippetButton;
     private VBox startRoot;
