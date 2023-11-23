@@ -1,0 +1,9 @@
+# macOS system organization file
+.DS_Store
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# compiled output
+out/
