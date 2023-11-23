@@ -1,3 +1,5 @@
+package java_files;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,7 +27,7 @@ public class newGUI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("newGUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/newGUI.fxml"));
         primaryStage.setTitle("Code Lib");
         primaryStage.setScene(new Scene(root, 1080, 600));
         primaryStage.show();
