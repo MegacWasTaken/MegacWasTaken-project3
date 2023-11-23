@@ -18,7 +18,7 @@ public class newGUI extends Application{
     {
         newGUI.primaryStage = primaryStage;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomeScreenGUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeScreenGUI.fxml"));
         Parent root = loader.load();
 
         HomeScreenController controller = loader.getController();

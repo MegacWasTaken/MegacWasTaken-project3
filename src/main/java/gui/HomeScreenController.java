@@ -18,7 +18,7 @@ public class HomeScreenController {
         // here, instead of the previous stuff, we just set up the stage to
         // be using a new fxml file that we make with Scene Builder for the "find" screen
         try{
-            Parent findRoot = FXMLLoader.load(getClass().getResource("/FindGUI.fxml"));
+            Parent findRoot = FXMLLoader.load(getClass().getResource("/gui/FindGUI.fxml"));
             stage.getScene().setRoot(findRoot);
         } catch(IOException e){
             e.printStackTrace();
