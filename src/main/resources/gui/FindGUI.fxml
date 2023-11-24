@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="-3.0" layoutY="55.0" prefHeight="535.0" prefWidth="190.0">
@@ -16,6 +15,8 @@
             <Button layoutX="27.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="160.0" text="Button" />
             <Button layoutX="27.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="160.0" text="Button" />
             <ScrollBar layoutX="13.0" layoutY="39.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="14.0" />
+            <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" text="&lt;" />
+            <Button layoutX="163.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" text="&gt;" />
          </children>
       </Pane>
       <Pane layoutX="13.0" layoutY="14.0">
