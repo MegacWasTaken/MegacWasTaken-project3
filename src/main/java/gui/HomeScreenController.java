@@ -71,13 +71,33 @@ public class HomeScreenController {
             // Create an FXMLLoader from this location, set new root as result of .load() on
             // this
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            Parent findRoot = loader.load();
+            loader.setController(this);
+            Parent newRoot = loader.load();
 
             // Update scene with this new element as root
-            stage.getScene().setRoot(findRoot);
+            stage.getScene().setRoot(newRoot);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void fileOrganizationButtonClicked() {
+        try {
+            String basePath = System.getProperty("user.dir");
+            String filePath = basePath + "/src/main/resources/gui/FileOrganization.fxml";
+
+            File fxmlFile = new File(filePath);
+            URL fxmlLocation = fxmlFile.toURI().toURL();
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            loader.setController(this);
+            Parent fileRoot = loader.load();
+
+            stage.getScene().setRoot(fileRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
