@@ -91,8 +91,9 @@ public class HomeScreenController {
             URL fxmlLocation = fxmlFile.toURI().toURL();
 
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            loader.setController(this);
+            // loader.setController(this);
             Parent fileRoot = loader.load();
+            FileController.setStage(stage);
 
             stage.getScene().setRoot(fileRoot);
         } catch (IOException e) {
