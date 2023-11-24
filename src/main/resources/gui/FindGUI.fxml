@@ -15,8 +15,6 @@
             <Button layoutX="27.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="160.0" text="Button" />
             <Button layoutX="27.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="160.0" text="Button" />
             <ScrollBar layoutX="13.0" layoutY="39.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="14.0" />
-            <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" text="&lt;" />
-            <Button layoutX="163.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" text="&gt;" />
          </children>
       </Pane>
       <Pane layoutX="13.0" layoutY="14.0">
@@ -33,5 +31,6 @@
          </children>
       </Pane>
       <TextArea layoutX="197.0" layoutY="102.0" prefHeight="490.0" prefWidth="873.0" promptText="Code Goes Here" />
+      <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" text="Home" />
    </children>
 </Pane>
