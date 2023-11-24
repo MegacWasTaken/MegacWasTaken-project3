@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.scene.Scene;
 
+// TO DO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
+// AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
     private static Stage stage;
 
