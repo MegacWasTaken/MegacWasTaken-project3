@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.net.URL;
 
-public class newGUI extends Application {
+public class GUI extends Application {
 
     private static Stage primaryStage;
 
@@ -16,7 +16,7 @@ public class newGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        newGUI.primaryStage = primaryStage;
+        GUI.primaryStage = primaryStage;
 
         String basePath = System.getProperty("user.dir");
         String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";

@@ -59,6 +59,25 @@ public class HomeScreenController {
     }
 
     public void newButtonClicked() {
+        try {
+            // Create the path with current dir + specific
+            String basePath = System.getProperty("user.dir");
+            String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
 
+            // Create file with path, take URL from this file
+            File fxmlFile = new File(filePath);
+            URL fxmlLocation = fxmlFile.toURI().toURL();
+
+            // Create an FXMLLoader from this location, set new root as result of .load() on
+            // this
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent findRoot = loader.load();
+
+            // Update scene with this new element as root
+            stage.getScene().setRoot(findRoot);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
