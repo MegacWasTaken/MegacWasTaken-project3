@@ -28,8 +28,8 @@ public class newGUI extends Application {
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         Parent root = loader.load();
 
-        HomeScreenController controller = loader.getController();
-        controller.setStage(primaryStage);
+        // HomeScreenController controller = loader.getController();
+        HomeScreenController.setStage(primaryStage);
         primaryStage.setTitle("Code Lib");
         primaryStage.setScene(new Scene(root, 1080, 600));
         primaryStage.show();

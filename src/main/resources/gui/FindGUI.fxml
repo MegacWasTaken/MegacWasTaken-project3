@@ -31,6 +31,6 @@
          </children>
       </Pane>
       <TextArea layoutX="197.0" layoutY="102.0" prefHeight="490.0" prefWidth="873.0" promptText="Code Goes Here" />
-      <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" text="Home" />
+      <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" />
    </children>
 </Pane>
