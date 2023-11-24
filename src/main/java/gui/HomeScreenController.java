@@ -12,7 +12,7 @@ public class HomeScreenController {
         this.stage = stage;
     }
 
-    public void findButtonClicked() { // TODO: proportions
+    public void findButtonClicked() {
         // here, instead of the previous stuff, we just set up the stage to
         // be using a new fxml file that we make with Scene Builder for the "find"
         // screen
