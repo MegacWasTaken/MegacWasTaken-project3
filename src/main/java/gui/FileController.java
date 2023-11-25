@@ -65,32 +65,12 @@ public class FileController {
     }
 
     private void loadDirectoryStructure() {
-        // our TreeView -- directoryTree -- requires a root TreeItem<String>. All other
-        // TreeItems spawn from this
-        // We hide it, but still exists for hierarchy purposes
         TreeItem<String> rootItem = new TreeItem<>("Root");
         directoryTree.setRoot(rootItem);
         directoryTree.setShowRoot(false);
 
-        TreeItem<String> javaBaseDirectory = new TreeItem<>("Java");
-        TreeItem<String> cBaseDirectory = new TreeItem<>("C");
-        TreeItem<String> pythonBaseDirectory = new TreeItem<>("Python");
-        TreeItem<String> otherBaseDirectory = new TreeItem<>("Other Languages");
-
-        List<TreeItem<String>> items = new ArrayList<>();
-        items.add(javaBaseDirectory);
-        items.add(cBaseDirectory);
-        items.add(pythonBaseDirectory);
-        items.add(otherBaseDirectory);
-        rootItem.getChildren().addAll(items);
-
-        TreeItem<String> javaExample1 = new TreeItem<>("Java Example 1");
-        TreeItem<String> javaExample2 = new TreeItem<>("Java Example 2");
-
-        List<TreeItem<String>> javaItems = new ArrayList<>();
-        javaItems.add(javaExample1);
-        javaItems.add(javaExample2);
-        javaBaseDirectory.getChildren().addAll(javaItems);
+        TreeItem<String> exampleFolder = new TreeItem<>("Example Folder");
+        rootItem.getChildren().add(exampleFolder);
     }
 
     // sets it so all initial elements have the right click functionality, which
