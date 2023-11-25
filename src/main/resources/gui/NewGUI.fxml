@@ -28,6 +28,6 @@
             <Pane prefHeight="488.0" prefWidth="186.0" />
          </content>
       </ScrollPane>
-      <Button layoutX="13.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="174.0" text="Selected Folder" />
+      <Button layoutX="13.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="174.0" text="Code Snippet uses:" />
    </children>
 </Pane>

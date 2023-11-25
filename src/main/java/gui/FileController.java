@@ -110,15 +110,15 @@ public class FileController {
                                 }
                             });
 
-                            MenuItem deleteFolder = new MenuItem("Delete Folder");
-                            deleteFolder.setOnAction(new EventHandler<ActionEvent>() {
+                            MenuItem delete = new MenuItem("Delete");
+                            delete.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
-                                    deleteFolder(getTreeItem());
+                                    delete(getTreeItem());
                                 }
                             });
 
-                            contextMenu.getItems().addAll(newFolderItem, deleteFolder);
+                            contextMenu.getItems().addAll(newFolderItem, delete);
                             // sets for current TreeCell "cell"
                             setContextMenu(contextMenu);
                         }
@@ -129,9 +129,9 @@ public class FileController {
         });
     }
 
-    private void deleteFolder(TreeItem<String> folderToDelete) {
-        if (folderToDelete != null) {
-            folderToDelete.getParent().getChildren().remove(folderToDelete);
+    private void delete(TreeItem<String> toDelete) {
+        if (toDelete != null) {
+            toDelete.getParent().getChildren().remove(toDelete);
         }
     }
 
