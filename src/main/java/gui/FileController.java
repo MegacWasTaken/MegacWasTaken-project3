@@ -24,9 +24,6 @@ import java.util.function.Consumer;
 
 // TO DO :(Later on, more theoretical for now): Figure out how we are going to store previously made files for the specific user
 // TO DO: (Later on, more theoretical for now): Figure out how we are going to search efficiently, using this TreeView structure
-
-// TO DO: (Next implementation): make it so users can create folders and maybe drag already existing files between (but not create new here)
-// since arent just text files but include other data that they input in the find window
 public class FileController {
     private static Stage stage;
 
@@ -53,12 +50,18 @@ public class FileController {
         }
     }
 
+    public static void setStage(Stage passedStage) {
+        stage = passedStage;
+    }
+
     // Once loaded, always calls initialize
     public void initialize() {
         // Create base folders
         loadDirectoryStructure();
         // Dynamic way for the user to add additional folders
         setupContextMenu();
+        // For base folders
+        setupTreeViewContextMenu();
     }
 
     private void loadDirectoryStructure() {
@@ -94,7 +97,7 @@ public class FileController {
     // allows new folders to be brought into existence
     private void setupContextMenu() {
         // Cell Factory: creates new nodes on the tree
-        // At INIT just sets this, but then
+        // At INIT just sets this, user can also create new
         directoryTree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
             // JavaFX calls this when a cell is updated / created
             @Override
@@ -105,6 +108,9 @@ public class FileController {
                     // want it, as specified by user)
                     // then, we set additional properties (make it so if new folder right clicked,
                     // still works)
+
+                    // item String is passed by the right click, of parent of what we are right
+                    // clicking
                     @Override
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
@@ -114,8 +120,8 @@ public class FileController {
                             setContextMenu(null);
                         } else {
                             setText(item);
-
                             ContextMenu contextMenu = new ContextMenu();
+
                             MenuItem newFolderItem = new MenuItem("New Folder");
                             newFolderItem.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
@@ -123,9 +129,17 @@ public class FileController {
                                     createNewFolder(getTreeItem());
                                 }
                             });
-                            contextMenu.getItems().add(newFolderItem);
-                            // Now, when we right click on a folder, this is called
-                            // "New Folder" Pops up, if clicked, then createNewFolder is called
+
+                            MenuItem deleteFolder = new MenuItem("Delete Folder");
+                            deleteFolder.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    deleteFolder(getTreeItem());
+                                }
+                            });
+
+                            contextMenu.getItems().addAll(newFolderItem, deleteFolder);
+                            // sets for current TreeCell "cell"
                             setContextMenu(contextMenu);
                         }
                     }
@@ -133,6 +147,12 @@ public class FileController {
                 return cell;
             }
         });
+    }
+
+    private void deleteFolder(TreeItem<String> folderToDelete) {
+        if (folderToDelete != null) {
+            folderToDelete.getParent().getChildren().remove(folderToDelete);
+        }
     }
 
     private void createNewFolder(TreeItem<String> parentItem) {
@@ -153,8 +173,33 @@ public class FileController {
         }
     }
 
-    public static void setStage(Stage passedStage) {
-        stage = passedStage;
+    private void setupTreeViewContextMenu() {
+        ContextMenu treeViewContextMenu = new ContextMenu();
+
+        MenuItem addMainFolder = new MenuItem("New Folder");
+        addMainFolder.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createNewMainFolder();
+            }
+        });
+
+        treeViewContextMenu.getItems().add(addMainFolder);
+        directoryTree.setContextMenu(treeViewContextMenu);
+    }
+
+    private void createNewMainFolder() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("New Main Folder");
+        dialog.setHeaderText(null);
+        dialog.setGraphic(null);
+        dialog.setContentText("Name");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            TreeItem<String> newFolderItem = new TreeItem<>(result.get());
+            directoryTree.getRoot().getChildren().add(newFolderItem);
+        }
     }
 
     public void homeButtonClicked() {
