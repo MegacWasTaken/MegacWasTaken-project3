@@ -28,9 +28,19 @@ public class FileController {
     private static Stage stage;
 
     @FXML
-    private TreeView<String> directoryTree;
+    private TreeView<String> directoryTree; //Left-hand Side
+    // @FXML
+    // private TreeView<String> folderContents; //Right-hand Side
     @FXML
     private TableView<File> fileTable;
+
+    // Replica of the selected Folder's contents (from the left-hand side)
+    // to the right-hand side
+    // public void folderContents() { //TODO
+    //     TreeItem<String> selectedFolder = selectedFolder.getSelectedItem();;
+    //     folderContents.add(selectedFolder.getChildren());
+
+    // }
 
     // Consumer : Interface : we implement accept() to perform our action
     // We pass the current node, to which we are adding the new item with result
@@ -45,6 +55,21 @@ public class FileController {
         public void accept(String newFolderName) {
             TreeItem<String> newFolderItem = new TreeItem<>(newFolderName);
             parentItem.getChildren().add(newFolderItem);
+            // Expands after creating
+            parentItem.setExpanded(true);
+        }
+    }
+
+    private class SnippetCreationHandler implements Consumer<String> {
+        private TreeItem<String> parentItem;
+
+        public SnippetCreationHandler(TreeItem<String> parentItem) {
+            this.parentItem = parentItem;
+        }
+
+        public void accept(String newSnippetName) {
+            TreeItem<String> newSnippet = new TreeItem<>(newSnippetName);
+            parentItem.getChildren().add(newSnippet);
             // Expands after creating
             parentItem.setExpanded(true);
         }
@@ -110,6 +135,14 @@ public class FileController {
                                 }
                             });
 
+                            MenuItem newSnippet = new MenuItem("New Snippet");
+                            newSnippet.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    createNewSnippet(getTreeItem());
+                                }
+                            });
+
                             MenuItem delete = new MenuItem("Delete");
                             delete.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
@@ -118,7 +151,7 @@ public class FileController {
                                 }
                             });
 
-                            contextMenu.getItems().addAll(newFolderItem, delete);
+                            contextMenu.getItems().addAll(newFolderItem, newSnippet, delete);
                             // sets for current TreeCell "cell"
                             setContextMenu(contextMenu);
                         }
@@ -149,6 +182,24 @@ public class FileController {
 
         if (result.isPresent()) {
             FolderCreationHandler handler = new FolderCreationHandler(parentItem);
+            handler.accept(result.get());
+        }
+    }
+
+    private void createNewSnippet(TreeItem<String> parentItem) {
+        // TextInputDialog: tool that opens a window
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("New Snippet");
+        dialog.setHeaderText(null);
+        dialog.setGraphic(null);
+        dialog.setContentText("Name");
+
+        // Use TextInputDialog's .showAndWait() to take input from the window, then
+        // close when submitted (this is done already by the class)
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            SnippetCreationHandler handler = new SnippetCreationHandler(parentItem);
             handler.accept(result.get());
         }
     }

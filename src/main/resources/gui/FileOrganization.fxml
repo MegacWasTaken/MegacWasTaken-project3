@@ -3,8 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -27,12 +26,8 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="815.0">
                      <children>
-                        <TableView fx:id="fileTable" layoutY="7.0" prefHeight="574.0" prefWidth="796.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                          </columns>
-                        </TableView>
+                        <TreeView layoutY="22.0" prefHeight="552.0" prefWidth="796.0" />
+                        <TextField layoutX="6.0" layoutY="-4.0" prefWidth="790.0" />
                      </children></AnchorPane>
               </content>
             </ScrollPane>
