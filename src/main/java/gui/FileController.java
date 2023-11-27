@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class FileController {
         // Cell Factory: creates new nodes on the tree
         // At INIT just sets this, user can also create new
         directoryTree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-            // JavaFX calls this when a cell is updated / created
+            // this sets what is called when an element is right clicked
             @Override
             public TreeCell<String> call(TreeView<String> tv) {
                 final TreeCell<String> cell = new TreeCell<String>() {
