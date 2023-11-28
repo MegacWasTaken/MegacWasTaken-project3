@@ -29,7 +29,7 @@ public class FileController {
     private static Stage stage;
 
     @FXML
-    private TreeView<String> directoryTree; //Left-hand Side
+    private TreeView<String> directoryTree; // Left-hand Side
     // @FXML
     // private TreeView<String> folderContents; //Right-hand Side
     @FXML
@@ -38,8 +38,8 @@ public class FileController {
     // Replica of the selected Folder's contents (from the left-hand side)
     // to the right-hand side
     // public void folderContents() { //TODO
-    //     TreeItem<String> selectedFolder = selectedFolder.getSelectedItem();;
-    //     folderContents.add(selectedFolder.getChildren());
+    // TreeItem<String> selectedFolder = selectedFolder.getSelectedItem();;
+    // folderContents.add(selectedFolder.getChildren());
 
     // }
 
