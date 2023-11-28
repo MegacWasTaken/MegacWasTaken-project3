@@ -73,8 +73,8 @@ public class HomeScreenController {
             // Create an FXMLLoader from this location, set new root as result of .load() on
             // this
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            loader.setController(this);
             Parent newRoot = loader.load();
+            NewController.setStage(stage);
 
             // Update scene with this new element as root
             stage.getScene().setRoot(newRoot);
