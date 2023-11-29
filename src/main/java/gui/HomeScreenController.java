@@ -92,7 +92,8 @@ public class HomeScreenController {
             NewController controller = loader.getController(); // Then get the controller
             if (controller != null) {
                 controller.setStage(stage);
-                controller.setTreeView(tree);
+                TreeView<FolderWithPath> treeInstance = new TreeView<FolderWithPath>();
+                controller.setTreeView(treeInstance);
             } else {
                 System.out.println("Controller is null");
             }

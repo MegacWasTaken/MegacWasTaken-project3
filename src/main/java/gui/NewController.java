@@ -24,11 +24,9 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class NewController {
-    @FXML
-    private TreeView<FolderWithPath> tree;
 
     public void setTreeView(TreeView<FolderWithPath> treeView) {
-        this.tree = treeView;
+        this.directoryTree = treeView;
     }
 
     // ALL OF THE LOADING:
@@ -93,8 +91,7 @@ public class NewController {
     // Once loaded, always calls initialize
     public void initialize() {
         System.out.println("AHOJ");
-        directoryTree = new TreeView<FolderWithPath>();
-        directoryTree.setStyle("-fx-background-color: lightblue;");
+        directoryTree.setStyle("-fx-background-color: red;");
         // Create base folders
         loadDirectoryStructure();
         System.out.println("YARR");
@@ -261,16 +258,14 @@ public class NewController {
         }
     }
 
-
-
     // public void loadDirectoryStructure() {
-    //     FolderWithPath rootItem = new FolderWithPath("Root", "");
-    //     tree.setRoot(rootItem);
-    //     // tree.setShowRoot(false);
+    // FolderWithPath rootItem = new FolderWithPath("Root", "");
+    // tree.setRoot(rootItem);
+    // // tree.setShowRoot(false);
 
-    //     FolderWithPath exampleFolder = new FolderWithPath("Example Folder", "/");
-    //     rootItem.getChildren().add(exampleFolder);
-    //     System.out.println("finished loading");
+    // FolderWithPath exampleFolder = new FolderWithPath("Example Folder", "/");
+    // rootItem.getChildren().add(exampleFolder);
+    // System.out.println("finished loading");
     // }
 
     public void newSnippetButtonClicked() {
