@@ -55,14 +55,24 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         Parent root = loader.load();
 
+        // Make the tree by creating the file explorer items before the button is
+        // pressed (but dont switch screen)
+        String basePathExplorer = System.getProperty("user.dir");
+        String filePathExplorer = basePathExplorer + "/src/main/resources/gui/FileOrganization.fxml";
+
+        File fxmlFileExplorer = new File(filePathExplorer);
+        URL fxmlLocationExplorer = fxmlFileExplorer.toURI().toURL();
+
+        FXMLLoader loaderExplorer = new FXMLLoader(fxmlLocationExplorer);
+        Parent explorerRoot = loaderExplorer.load();
+        FileController fileControllerExplorer = loaderExplorer.getController();
+        HomeScreenController.setTree(fileControllerExplorer.directoryTree);
+        HomeScreenController.setRoot(explorerRoot);
+
         HomeScreenController.setStage(primaryStage);
         primaryStage.setTitle("Code Lib");
         primaryStage.setScene(new Scene(root, 1080, 600));
         primaryStage.show();
-
-        FileController instance = new FileController();
-        TreeView<String> tree = instance.directoryTree;
-        HomeScreenController.setTree(tree);
     }
 
     public static void main(String[] args) {

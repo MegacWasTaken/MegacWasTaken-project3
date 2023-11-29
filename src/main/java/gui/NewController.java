@@ -26,31 +26,33 @@ import java.util.function.Consumer;
 public class NewController {
 
     public static Stage stage;
-    public static TreeView<String> tree;
+    @FXML
+    private TreeView<String> tree;
 
-    public static void setStage(Stage stage1) {
+    public void setStage(Stage stage1) {
         stage = stage1;
     }
 
-    public static void setTreeView(TreeView<String> treeView) {
-        tree = treeView;
+    public void setTreeView(TreeView<String> treeView) {
+        this.tree = treeView;
     }
 
-    // to establish the panel, that we can set here, take it from the controller
-    // (pass GUI or something?)
-    // pass in the constructor
-    // public String getPath() {
-    // takes a property of the root defining in the panel, returns current route
-    // }
+    @FXML
+    private void initialize() {
+        loadDirectoryStructure();
+    }
 
-    // TO DO: make this create data from
+    // ALL OF THE LOADING:
 
-    // Language: make this the first keyword
-    // Keywords field: limit the amount (maybe 50?) -> store in string field of
-    // snippet object
-    // filepath: take the filepath (make sure to make this read only, handle null
-    // errors)
-    // code snippet text: just take as a big string? or organize another way?
+    public void loadDirectoryStructure() {
+        FolderWithPath rootItem = new FolderWithPath("Root", "");
+        tree.setRoot(rootItem);
+        // tree.setShowRoot(false);
+
+        FolderWithPath exampleFolder = new FolderWithPath("Example Folder", "/");
+        rootItem.getChildren().add(exampleFolder);
+        System.out.println("finished loading");
+    }
 
     public void newSnippetButtonClicked() {
         System.out.println("hi");

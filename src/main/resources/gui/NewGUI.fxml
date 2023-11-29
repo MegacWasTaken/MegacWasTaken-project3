@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewController"> 
@@ -25,7 +26,10 @@
       <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" />
       <ScrollPane layoutX="13.0" layoutY="102.0" prefHeight="490.0" prefWidth="184.0">
          <content>
-            <Pane prefHeight="488.0" prefWidth="186.0" />
+            <Pane prefHeight="488.0" prefWidth="186.0">
+               <children>
+                  <TreeView fx:id="tree" layoutX="-7.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
+               </children></Pane>
          </content>
       </ScrollPane>
       <Button layoutX="13.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="174.0" text="Code Snippet uses:" />

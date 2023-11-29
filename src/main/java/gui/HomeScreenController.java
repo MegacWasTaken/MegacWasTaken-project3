@@ -12,9 +12,17 @@ import javafx.scene.control.TreeView;
 public class HomeScreenController {
     private static Stage stage;
     public static TreeView<String> tree;
+    public static Parent fileRoot;
 
     public static void setStage(Stage stageParam) {
         stage = stageParam;
+    }
+
+    public static void setRoot(Parent root) {
+        if (root == null)
+            System.out.println("ah man");
+        System.out.println("yes man!");
+        fileRoot = root;
     }
 
     // Obtain the TreeView
@@ -58,6 +66,9 @@ public class HomeScreenController {
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             loader.setController(this);
             Parent findRoot = loader.load();
+            NewController controllerInstance = loader.getController();
+            controllerInstance.setStage(stage);
+            controllerInstance.setTreeView(tree);
 
             // Update scene with this new element as root
             stage.getScene().setRoot(findRoot);
@@ -69,24 +80,23 @@ public class HomeScreenController {
 
     public void newButtonClicked() {
         try {
-            // Create the path with current dir + specific
             String basePath = System.getProperty("user.dir");
             String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
 
-            // Create file with path, take URL from this file
             File fxmlFile = new File(filePath);
             URL fxmlLocation = fxmlFile.toURI().toURL();
 
-            // Create an FXMLLoader from this location, set new root as result of .load() on
-            // this
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            Parent newRoot = loader.load();
+            Parent newRoot = loader.load(); // Load the FXML first
 
-            // Setting static variables for the controller in the new FXML: NewController
-            NewController.setStage(stage);
-            NewController.setTreeView(tree);
+            NewController controller = loader.getController(); // Then get the controller
+            if (controller != null) {
+                controller.setStage(stage);
+                controller.setTreeView(tree);
+            } else {
+                System.out.println("Controller is null");
+            }
 
-            // Update scene with this new element as root
             stage.getScene().setRoot(newRoot);
 
         } catch (IOException e) {
@@ -95,22 +105,11 @@ public class HomeScreenController {
     }
 
     public void fileOrganizationButtonClicked() {
-        try {
-            String basePath = System.getProperty("user.dir");
-            String filePath = basePath + "/src/main/resources/gui/FileOrganization.fxml";
-
-            File fxmlFile = new File(filePath);
-            URL fxmlLocation = fxmlFile.toURI().toURL();
-
-            FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            // loader.setController(this);
-            Parent fileRoot = loader.load();
-            FileController.setStage(stage);
-
-            stage.getScene().setRoot(fileRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        // now should already hvae the instance created in GUI callee, so sends the tree
+        // easily
+        // both roots point to the same place
+        // but how to access methods? well for that, copy code over
+        FileController.setStage(stage);
+        stage.getScene().setRoot(fileRoot);
     }
 }
