@@ -23,17 +23,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-// TO DO :(Later on, more theoretical for now): Figure out how we are going to store previously made files for the specific user
-// TO DO: (Later on, more theoretical for now): Figure out how we are going to search efficiently, using this TreeView structure
 public class FileController {
     private static Stage stage;
 
     @FXML
-    private TreeView<String> directoryTree; // Left-hand Side
+    public TreeView<String> directoryTree; // Left-hand Side
     // @FXML
     // private TreeView<String> folderContents; //Right-hand Side
     @FXML
-    private TableView<File> fileTable;
+    public TableView<File> fileTable;
 
     // Replica of the selected Folder's contents (from the left-hand side)
     // to the right-hand side
@@ -46,16 +44,19 @@ public class FileController {
     // Consumer : Interface : we implement accept() to perform our action
     // We pass the current node, to which we are adding the new item with result
     // from the prompt
-    private class FolderCreationHandler implements Consumer<String> {
-        private TreeItem<String> parentItem;
 
-        public FolderCreationHandler(TreeItem<String> parentItem) {
+    private class FolderCreationHandler implements Consumer<String> {
+        private FolderWithPath parentItem;
+
+        public FolderCreationHandler(FolderWithPath parentItem) {
             this.parentItem = parentItem;
         }
 
         public void accept(String newFolderName) {
-            TreeItem<String> newFolderItem = new TreeItem<>(newFolderName);
+            String childPath = parentItem.getPath() + "/" + newFolderName;
+            FolderWithPath newFolderItem = new FolderWithPath(newFolderName, childPath);
             parentItem.getChildren().add(newFolderItem);
+            System.out.println("Created new path for child of: " + childPath);
             // Expands after creating
             parentItem.setExpanded(true);
         }
@@ -90,18 +91,18 @@ public class FileController {
         setupTreeViewContextMenu();
     }
 
-    private void loadDirectoryStructure() {
-        TreeItem<String> rootItem = new TreeItem<>("Root");
+    public void loadDirectoryStructure() {
+        FolderWithPath rootItem = new FolderWithPath("Root", "");
         directoryTree.setRoot(rootItem);
         directoryTree.setShowRoot(false);
 
-        TreeItem<String> exampleFolder = new TreeItem<>("Example Folder");
+        FolderWithPath exampleFolder = new FolderWithPath("Example Folder", "/");
         rootItem.getChildren().add(exampleFolder);
     }
 
     // sets it so all initial elements have the right click functionality, which
     // allows new folders to be brought into existence
-    private void setupContextMenu() {
+    public void setupContextMenu() {
         // Cell Factory: creates new nodes on the tree
         // At INIT just sets this, user can also create new
         directoryTree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
@@ -132,7 +133,8 @@ public class FileController {
                             newFolderItem.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
-                                    createNewFolder(getTreeItem());
+                                    FolderWithPath newFolder = (FolderWithPath) getTreeItem();
+                                    createNewFolder(newFolder);
                                 }
                             });
 
@@ -163,13 +165,13 @@ public class FileController {
         });
     }
 
-    private void delete(TreeItem<String> toDelete) {
+    public void delete(TreeItem<String> toDelete) {
         if (toDelete != null) {
             toDelete.getParent().getChildren().remove(toDelete);
         }
     }
 
-    private void createNewFolder(TreeItem<String> parentItem) {
+    public void createNewFolder(FolderWithPath parentFolder) {
         // TextInputDialog: tool that opens a window
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New Folder");
@@ -182,12 +184,12 @@ public class FileController {
         Optional<String> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            FolderCreationHandler handler = new FolderCreationHandler(parentItem);
+            FolderCreationHandler handler = new FolderCreationHandler(parentFolder);
             handler.accept(result.get());
         }
     }
 
-    private void createNewSnippet(TreeItem<String> parentItem) {
+    public void createNewSnippet(TreeItem<String> parentItem) {
         // TextInputDialog: tool that opens a window
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New Snippet");
@@ -205,7 +207,7 @@ public class FileController {
         }
     }
 
-    private void setupTreeViewContextMenu() {
+    public void setupTreeViewContextMenu() {
         ContextMenu treeViewContextMenu = new ContextMenu();
 
         MenuItem addMainFolder = new MenuItem("New Folder");
@@ -220,7 +222,7 @@ public class FileController {
         directoryTree.setContextMenu(treeViewContextMenu);
     }
 
-    private void createNewMainFolder() {
+    public void createNewMainFolder() {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New Main Folder");
         dialog.setHeaderText(null);

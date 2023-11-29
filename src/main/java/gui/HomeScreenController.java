@@ -5,14 +5,21 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javafx.scene.Scene;
+import javafx.scene.control.TreeView;
 
 // TO DO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
 // AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
     private static Stage stage;
+    public static TreeView<String> tree;
 
     public static void setStage(Stage stageParam) {
         stage = stageParam;
+    }
+
+    // Obtain the TreeView
+    public static void setTree(TreeView<String> input) {
+        tree = input;
     }
 
     public void homeButtonClicked() {
@@ -74,7 +81,10 @@ public class HomeScreenController {
             // this
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent newRoot = loader.load();
+
+            // Setting static variables for the controller in the new FXML: NewController
             NewController.setStage(stage);
+            NewController.setTreeView(tree);
 
             // Update scene with this new element as root
             stage.getScene().setRoot(newRoot);
