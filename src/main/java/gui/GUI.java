@@ -66,7 +66,7 @@ public class GUI extends Application {
         FXMLLoader loaderExplorer = new FXMLLoader(fxmlLocationExplorer);
         Parent explorerRoot = loaderExplorer.load();
         FileController fileControllerExplorer = loaderExplorer.getController();
-        HomeScreenController.setTree(fileControllerExplorer.directoryTree);
+        // HomeScreenController.setTree(fileControllerExplorer.directoryTree);
         HomeScreenController.setRoot(explorerRoot);
 
         HomeScreenController.setStage(primaryStage);

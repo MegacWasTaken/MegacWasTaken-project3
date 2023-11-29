@@ -11,7 +11,7 @@ import javafx.scene.control.TreeView;
 // AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
     private static Stage stage;
-    public static TreeView<String> tree;
+    public static TreeView<FolderWithPath> tree;
     public static Parent fileRoot;
 
     public static void setStage(Stage stageParam) {
@@ -26,7 +26,7 @@ public class HomeScreenController {
     }
 
     // Obtain the TreeView
-    public static void setTree(TreeView<String> input) {
+    public static void setTree(TreeView<FolderWithPath> input) {
         tree = input;
     }
 
