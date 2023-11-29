@@ -94,6 +94,7 @@ public class NewController {
     public void initialize() {
         System.out.println("AHOJ");
         directoryTree = new TreeView<FolderWithPath>();
+        directoryTree.setStyle("-fx-background-color: lightblue;");
         // Create base folders
         loadDirectoryStructure();
         System.out.println("YARR");
