@@ -1,3 +1,5 @@
+package gui;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;

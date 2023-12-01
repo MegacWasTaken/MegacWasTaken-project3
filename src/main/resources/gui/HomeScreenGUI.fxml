@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
    <children>
       <Button layoutX="350.0" layoutY="100.0" mnemonicParsing="false" onAction="#findButtonClicked" prefHeight="150.0" prefWidth="381.0" text="Find" />
       <Button layoutX="350.0" layoutY="350.0" mnemonicParsing="false" onAction="#newButtonClicked" prefHeight="150.0" prefWidth="381.0" text="New" />
