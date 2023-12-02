@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewController"> 
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NewController"> 
    <children>
       <Pane layoutX="13.0" layoutY="14.0">
          <children>
@@ -19,7 +19,7 @@
          <children>
             <Button layoutX="7.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" text="&lt;" />
             <Button layoutX="39.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" text="&gt;" />
-            <TextField disable="true" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="608.0" />
+            <TextField fx:id="path" disable="true" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="608.0" />
          </children>
       </Pane>
       <TextArea layoutX="197.0" layoutY="102.0" prefHeight="490.0" prefWidth="873.0" promptText="Code Goes Here" />

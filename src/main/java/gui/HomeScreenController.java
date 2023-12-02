@@ -9,110 +9,223 @@ import java.net.URL;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.scene.control.TreeView;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 // TO DO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
 // AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
-    private static Stage stage;
-    public static TreeView<FolderWithPath> tree;
-    public static Parent fileRoot;
+    private Stage stage;
+    @FXML
+    public TreeView<String> tree;
+    public Parent fileRoot;
 
-    public static void setStage(Stage stageParam) {
+    public void setStage(Stage stageParam) {
         stage = stageParam;
     }
 
-    public static void setRoot(Parent root) {
-        if (root == null)
-            System.out.println("ah man");
-        System.out.println("yes man!");
-        fileRoot = root;
-    }
+    private class FolderCreationHandler implements Consumer<String> {
+        private TreeItem<String> parent;
 
-    // Obtain the TreeView
-    public static void setTree(TreeView<FolderWithPath> input) {
-        tree = input;
-    }
-
-    public void homeButtonClicked() {
-        try {
-            String basePath = System.getProperty("user.dir");
-            String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";
-
-            File fxmlFile = new File(filePath);
-            URL fxmlLocation = fxmlFile.toURI().toURL();
-
-            FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            Parent homeRoot = loader.load();
-
-            stage.setScene(new Scene(homeRoot, 1080, 600));
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        public FolderCreationHandler(TreeItem<String> parent) {
+            this.parent = parent;
         }
-    }
 
-    public void findButtonClicked() {
-        // here, instead of the previous stuff, we just set up the stage to
-        // be using a new fxml file that we make with Scene Builder for the "find"
-        // screen
-        try {
-            // Create the path with current dir + specific
-            String basePath = System.getProperty("user.dir");
-            String filePath = basePath + "/src/main/resources/gui/FindGUI.fxml";
+        public void accept(String newFolderName) {
+            String childPath = parent.getValue() + "/" + newFolderName;
+            // Handles parsing name from whole path in the CellFactory
 
-            // Create file with path, take URL from this file
-            File fxmlFile = new File(filePath);
-            URL fxmlLocation = fxmlFile.toURI().toURL();
-
-            // Create an FXMLLoader from this location, set new root as result of .load() on
-            // this
-            FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            loader.setController(this);
-            Parent findRoot = loader.load();
-            NewController controllerInstance = loader.getController();
-            controllerInstance.setStage(stage);
-            controllerInstance.setTreeView(tree);
-
-            // Update scene with this new element as root
-            stage.getScene().setRoot(findRoot);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void newButtonClicked() {
-        try {
-            String basePath = System.getProperty("user.dir");
-            String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
-
-            File fxmlFile = new File(filePath);
-            URL fxmlLocation = fxmlFile.toURI().toURL();
-
-            FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            Parent newRoot = loader.load(); // Load the FXML first
-
-            NewController controller = loader.getController(); // Then get the controller
-            if (controller != null) {
-                controller.setStage(stage);
-                TreeView<FolderWithPath> treeInstance = new TreeView<FolderWithPath>();
-                controller.setTreeView(treeInstance);
-            } else {
-                System.out.println("Controller is null");
+            // Check if the existing name already exists before adding
+            boolean exists = false;
+            for (TreeItem<String> child : parent.getChildren()) {
+                if (child.getValue().endsWith("/" + newFolderName)) {
+                    exists = true;
+                    break;
+                }
             }
 
-            stage.getScene().setRoot(newRoot);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (!exists) {
+                TreeItem<String> newFolder = new TreeItem<String>(childPath);
+                parent.getChildren().add(newFolder);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("A folder with name " + newFolderName + " already exists in this directory");
+            }
         }
     }
 
-    public void fileOrganizationButtonClicked() {
-        // now should already hvae the instance created in GUI callee, so sends the tree
-        // easily
-        // both roots point to the same place
-        // but how to access methods? well for that, copy code over
-        FileController.setStage(stage);
-        stage.getScene().setRoot(fileRoot);
+    public void initialize() {
+        // TO DO : load the directory tree from user's written file to appstate
+
+        // load directory from appstate
+        tree.setRoot(AppState.getInstance().getTreeRoot());
+        // set root of TreeView with AppState singleton
+        // Create base example folder
+        loadDirectoryStructure();
+
+        // Dynamic way for users to add additional folders
+        setupContextMenu();
+
+        // For root interaction (right clicking on empty inside root directory)
+        setupRootContextMenu();
+
+        // Set visible
+        tree.setVisible(true);
+    }
+
+    public void loadDirectoryStructure() {
+        TreeItem<String> root = AppState.getInstance().getTreeRoot();
+
+        if (root.getChildren().isEmpty()) {
+            TreeItem<String> exampleFolder = new TreeItem<>("Example Folder");
+            root.getChildren().add(exampleFolder);
+            AppState.getInstance().setTreeRoot(root);
+        }
+
+        tree.setRoot(root);
+        tree.setShowRoot(false);
+    }
+
+    public void setupContextMenu() {
+        tree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+            @Override
+            public TreeCell<String> call(TreeView<String> tv) {
+                final TreeCell<String> cell = new TreeCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setText(null);
+                            setContextMenu(null);
+                        } else {
+                            String folderName = item.substring(item.lastIndexOf("/") + 1);
+                            setText(folderName);
+
+                            ContextMenu contextMenu = new ContextMenu();
+
+                            MenuItem newFolderItem = new MenuItem("New Folder");
+                            newFolderItem.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    TreeItem<String> newFolder = getTreeItem();
+                                    createNewFolder(newFolder);
+                                }
+                            });
+
+                            MenuItem newSnippet = new MenuItem("New Snippet");
+
+                            // TO DO: make this take us to new snippet creation screen
+                            newSnippet.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    try {
+                                        String basePath = System.getProperty("user.dir");
+                                        String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
+
+                                        File fxmlFile = new File(filePath);
+                                        URL fxmlLocation = fxmlFile.toURI().toURL();
+
+                                        FXMLLoader loader = new FXMLLoader(fxmlLocation);
+                                        Parent newRoot = loader.load(); // Load the FXML first
+
+                                        NewController controller = loader.getController(); // Then get the controller
+                                        if (controller != null) {
+                                            controller.setStage(stage);
+                                            controller.setFilePath(item);
+                                        } else {
+                                            System.out.println("Controller is null");
+                                        }
+
+                                        stage.getScene().setRoot(newRoot);
+
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+                            MenuItem delete = new MenuItem("Delete");
+                            delete.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    delete(getTreeItem());
+                                }
+                            });
+
+                            contextMenu.getItems().addAll(newFolderItem, newSnippet, delete);
+                            // sets for current TreeCell "cell"
+                            setContextMenu(contextMenu);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+    }
+
+    public void setupRootContextMenu() {
+        ContextMenu rootMenu = new ContextMenu();
+
+        // Seamless experience for the user
+        MenuItem addRootFolder = new MenuItem("New Folder");
+
+        addRootFolder.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createNewFolder(tree.getRoot());
+            }
+        });
+
+        rootMenu.getItems().add(addRootFolder);
+        tree.setContextMenu(rootMenu);
+    }
+
+    public void delete(TreeItem<String> itemToDelete) {
+        if (itemToDelete != null) {
+            itemToDelete.getParent().getChildren().remove(itemToDelete);
+            AppState.getInstance().setTreeRoot(tree.getRoot());
+        }
+    }
+
+    public void createNewFolder(TreeItem<String> parentFolder) {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("New Folder");
+        dialog.setGraphic(null);
+        dialog.setHeaderText(null);
+        dialog.setContentText("Name");
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            FolderCreationHandler handler = new FolderCreationHandler(parentFolder);
+            handler.accept(result.get());
+            AppState.getInstance().setTreeRoot(tree.getRoot());
+        }
     }
 }

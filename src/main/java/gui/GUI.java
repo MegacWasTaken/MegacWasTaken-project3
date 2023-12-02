@@ -35,9 +35,9 @@ import java.util.function.Consumer;
 
 public class GUI extends Application {
 
-    private static Stage primaryStage;
+    private Stage primaryStage;
 
-    public static Stage getPrimaryStage() {
+    public Stage getPrimaryStage() {
         return primaryStage;
     }
 
@@ -45,7 +45,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         // HomeScreenController is initialized when the fxml is declared because it is
         // defined there as the controller
-        GUI.primaryStage = primaryStage;
+        this.primaryStage = primaryStage;
 
         String basePath = System.getProperty("user.dir");
         String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";
@@ -59,19 +59,10 @@ public class GUI extends Application {
 
         // Make the tree by creating the file explorer items before the button is
         // pressed (but dont switch screen)
-        String basePathExplorer = System.getProperty("user.dir");
-        String filePathExplorer = basePathExplorer + "/src/main/resources/gui/FileOrganization.fxml";
 
-        File fxmlFileExplorer = new File(filePathExplorer);
-        URL fxmlLocationExplorer = fxmlFileExplorer.toURI().toURL();
-
-        FXMLLoader loaderExplorer = new FXMLLoader(fxmlLocationExplorer);
-        Parent explorerRoot = loaderExplorer.load();
-        FileController fileControllerExplorer = loaderExplorer.getController();
-        // HomeScreenController.setTree(fileControllerExplorer.directoryTree);
-        HomeScreenController.setRoot(explorerRoot);
-
-        HomeScreenController.setStage(primaryStage);
+        HomeScreenController controllerInstance = loader.getController();
+        // somehow this is null?
+        controllerInstance.setStage(primaryStage);
         primaryStage.setTitle("Code Lib");
         primaryStage.setScene(new Scene(root, 1080, 600));
         primaryStage.show();
