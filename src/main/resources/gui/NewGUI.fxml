@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NewController"> 
@@ -15,24 +13,15 @@
             <TextField layoutX="865.0" prefHeight="41.0" prefWidth="190.0" promptText="Language" />
          </children>
       </Pane>
-      <Pane layoutX="187.0" layoutY="55.0">
+      <Pane layoutX="80.0" layoutY="55.0" prefHeight="37.0" prefWidth="785.0">
          <children>
-            <Button layoutX="7.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" text="&lt;" />
-            <Button layoutX="39.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" text="&gt;" />
-            <TextField fx:id="path" disable="true" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="608.0" />
+            <TextField fx:id="path" disable="true" layoutY="12.0" prefHeight="25.0" prefWidth="785.0" />
          </children>
       </Pane>
-      <TextArea layoutX="197.0" layoutY="102.0" prefHeight="490.0" prefWidth="873.0" promptText="Code Goes Here" />
+      <TextArea layoutX="15.0" layoutY="102.0" prefHeight="490.0" prefWidth="1055.0" promptText="Code Goes Here" />
       <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" />
-      <ScrollPane layoutX="13.0" layoutY="102.0" prefHeight="490.0" prefWidth="184.0">
-         <content>
-            <Pane prefHeight="488.0" prefWidth="186.0">
-               <children>
-                  <TreeView fx:id="directoryTree" layoutX="14.0" layoutY="14.0" prefHeight="189.0" prefWidth="132.0" />
-               </children></Pane>
-         </content>
-      </ScrollPane>
-      <Button layoutX="13.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="174.0" text="Code Snippet uses:" />
-      <Button layoutX="882.0" layoutY="61.0" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Create" />
+      <Button layoutX="879.0" layoutY="64.0" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Create" />
+      <Button layoutX="14.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" text="&lt;" />
+      <Button layoutX="46.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" text="&gt;" />
    </children>
 </Pane>
