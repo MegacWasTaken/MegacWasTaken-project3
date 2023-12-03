@@ -102,8 +102,8 @@ public class NewController {
             Parent homeRoot = loader.load();
             HomeScreenController homeController = loader.getController();
             homeController.setStage(stage);
-            System.out.println("current text is " + code.getText());
-            if ((code.getText().isEmpty())) {
+            if (createUpdate.getText().equals("Create") && code.getText().equals("")) {
+                System.out.println("we entered this block");
                 homeController.removeTreeItem(path.getText());
             }
 

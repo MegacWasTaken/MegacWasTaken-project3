@@ -239,15 +239,13 @@ public class HomeScreenController {
                                 });
 
                                 MenuItem newSnippet = new MenuItem("New Snippet");
-
-                                // TO DO: make this take us to new snippet creation screen
+                                // New snippet button: collect name with createNewSnippet, then handle rest in
+                                // NewController
                                 newSnippet.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent event) {
                                         try {
-                                            TreeItem<String> newSnippet = getTreeItem(); // TODO: check if this is valid
-                                                                                         // - it looks right, might not
-                                                                                         // be good though
+                                            TreeItem<String> newSnippet = getTreeItem();
                                             String snippetName = createNewSnippet(newSnippet);
 
                                             String basePath = System.getProperty("user.dir");
@@ -339,7 +337,7 @@ public class HomeScreenController {
 
     public void removeTreeItem(String path) {
         System.out.println("hi");
-        // removeTreeItemRecursive(tree.getRoot(), path);
+        removeTreeItemRecursive(tree.getRoot(), path);
     }
 
     private void removeTreeItemRecursive(TreeItem<String> current, String path) {
