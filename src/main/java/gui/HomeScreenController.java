@@ -165,8 +165,14 @@ public class HomeScreenController {
                             setText(folderName);
 
                             ContextMenu contextMenu = new ContextMenu();
+                            System.out.println("This is all of the keys in the hash map");
+                            for (String key : snippets.keySet()) {
+                                System.out.println(key);
+                            }
+                            System.out.println("End of keys");
 
-                            if (snippets.get(item) != null && snippets.get(item).getName() != item) {
+                            System.out.println("Now, looking for key:" + item + "\"");
+                            if (snippets.get(item) == null) {
                                 MenuItem newFolderItem = new MenuItem("New Folder");
                                 newFolderItem.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
@@ -183,8 +189,10 @@ public class HomeScreenController {
                                     @Override
                                     public void handle(ActionEvent event) {
                                         try {
-                                            TreeItem<String> newSnippet = getTreeItem(); //TODO: check if this is valid - it looks right, might not be good though
-                                            createNewSnippet(newSnippet);
+                                            TreeItem<String> newSnippet = getTreeItem(); // TODO: check if this is valid
+                                                                                         // - it looks right, might not
+                                                                                         // be good though
+                                            String snippetName = createNewSnippet(newSnippet);
 
                                             String basePath = System.getProperty("user.dir");
                                             String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
@@ -195,10 +203,11 @@ public class HomeScreenController {
                                             FXMLLoader loader = new FXMLLoader(fxmlLocation);
                                             Parent newRoot = loader.load(); // Load the FXML first
 
-                                            NewController controller = loader.getController(); // Then get the controller
+                                            NewController controller = loader.getController(); // Then get the
+                                                                                               // controller
                                             if (controller != null) {
                                                 controller.setStage(stage);
-                                                controller.setFilePath(item);
+                                                controller.setFilePath(item + snippetName);
                                             } else {
                                                 System.out.println("Controller is null");
                                             }
@@ -272,7 +281,7 @@ public class HomeScreenController {
         }
     }
 
-    public void createNewSnippet(TreeItem<String> parentFolder) {
+    public String createNewSnippet(TreeItem<String> parentFolder) {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New Snippet");
         dialog.setGraphic(null);
@@ -285,6 +294,8 @@ public class HomeScreenController {
             SnippetCreationHandler handler = new SnippetCreationHandler(parentFolder);
             handler.accept(result.get());
             AppState.getInstance().setTreeRoot(tree.getRoot());
+            return "/" + result.get();
         }
+        return "";
     }
 }
