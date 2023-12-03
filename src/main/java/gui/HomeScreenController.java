@@ -313,7 +313,43 @@ public class HomeScreenController {
             }
         });
 
-        rootMenu.getItems().add(addRootFolder);
+        MenuItem addRootSnippet = new MenuItem("New Snippet");
+
+        addRootSnippet.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String snippetName = createNewSnippet(tree.getRoot());
+                    if (snippetName == null)
+                        return;
+
+                    String basePath = System.getProperty("user.dir");
+                    String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
+
+                    File fxmlFile = new File(filePath);
+                    URL fxmlLocation = fxmlFile.toURI().toURL();
+
+                    FXMLLoader loader = new FXMLLoader(fxmlLocation);
+                    Parent newRoot = loader.load();
+
+                    NewController controller = loader.getController();
+
+                    if (controller != null) {
+                        controller.setStage(stage);
+                        // This will be added to the HashMap as just the name, since no previous
+                        controller.setFilePath(snippetName);
+                    } else {
+                        System.out.println("Null controller");
+                    }
+
+                    stage.getScene().setRoot(newRoot);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rootMenu.getItems().addAll(addRootFolder, addRootSnippet);
         tree.setContextMenu(rootMenu);
     }
 
@@ -333,9 +369,11 @@ public class HomeScreenController {
 
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent()) {
+        if (result.isPresent() && !result.get().trim().isEmpty()) {
+            String folderName = result.get();
+            folderName = folderName.trim();
             FolderCreationHandler handler = new FolderCreationHandler(parentFolder);
-            handler.accept(result.get());
+            handler.accept(folderName);
             AppState.getInstance().setTreeRoot(tree.getRoot());
         }
     }
