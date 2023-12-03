@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
-
+import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,13 +36,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+//TODO: change create button to "Update" after first time
+//TODO: fix inputting a name and then exiting out creating a non-snippet
+//TODO: check if textdialog optional String is non-null and not empty before moving forward
+
+//THEN:
+//TODO: Read file from local drive when opening
+//TODO: When changes are made, update this file
+//TODO: begin integration with search: build basic search functionality
+
 // TO DO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
 // AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
     private Stage stage;
     @FXML
     public TreeView<String> tree;
-    public HashMap<String, Snippet> snippets;
     public Parent fileRoot;
 
     public void setStage(Stage stageParam) {
@@ -120,7 +128,6 @@ public class HomeScreenController {
 
         // load directory from appstate
         tree.setRoot(AppState.getInstance().getTreeRoot());
-        this.snippets = new HashMap<String, Snippet>();
         // set root of TreeView with AppState singleton
         // Create base example folder
         loadDirectoryStructure();
@@ -130,6 +137,21 @@ public class HomeScreenController {
 
         // For root interaction (right clicking on empty inside root directory)
         setupRootContextMenu();
+
+        tree.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    TreeItem<String> item = tree.getSelectionModel().getSelectedItem();
+                    if (item != null) {
+                        String itemPath = item.getValue();
+                        if (AppState.getInstance().getSnippetList().containsKey(itemPath)) {
+                            handleSnippetDoubleClick(itemPath);
+                        }
+                    }
+                }
+            }
+        });
 
         // Set visible
         tree.setVisible(true);
@@ -146,6 +168,39 @@ public class HomeScreenController {
 
         tree.setRoot(root);
         tree.setShowRoot(false);
+    }
+
+    public void handleSnippetDoubleClick(String path) {
+        try {
+            String basePath = System.getProperty("user.dir");
+            String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
+
+            File fxmlFile = new File(filePath);
+            URL fxmlLocation = fxmlFile.toURI().toURL();
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent newRoot = loader.load(); // Load the FXML first
+
+            NewController controller = loader.getController(); // Then get the
+                                                               // controller
+            if (controller != null) {
+                controller.setStage(stage);
+                controller.setFilePath(path);
+
+                Snippet currentSnippet = AppState.getInstance().getSnippetList().get(path);
+                controller.code.setText(currentSnippet.getCode());
+                controller.keywords.setText(currentSnippet.getKeywords());
+                controller.language.setText(currentSnippet.getLanguage());
+                // controller.createUpdate.setText("Update");
+            } else {
+                System.out.println("Controller is null");
+            }
+
+            stage.getScene().setRoot(newRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Switch to new scene with fields from object displayed in boxes
     }
 
     public void setupContextMenu() {
@@ -166,13 +221,13 @@ public class HomeScreenController {
 
                             ContextMenu contextMenu = new ContextMenu();
                             System.out.println("This is all of the keys in the hash map");
-                            for (String key : snippets.keySet()) {
+                            for (String key : AppState.getInstance().getSnippetList().keySet()) {
                                 System.out.println(key);
                             }
                             System.out.println("End of keys");
 
                             System.out.println("Now, looking for key:" + item + "\"");
-                            if (snippets.get(item) == null) {
+                            if (AppState.getInstance().getSnippetList().get(item) == null) {
                                 setText(folderName);
                                 MenuItem newFolderItem = new MenuItem("New Folder");
                                 newFolderItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -279,6 +334,21 @@ public class HomeScreenController {
             FolderCreationHandler handler = new FolderCreationHandler(parentFolder);
             handler.accept(result.get());
             AppState.getInstance().setTreeRoot(tree.getRoot());
+        }
+    }
+
+    public void removeTreeItem(String path) {
+        System.out.println("hi");
+        // removeTreeItemRecursive(tree.getRoot(), path);
+    }
+
+    private void removeTreeItemRecursive(TreeItem<String> current, String path) {
+        for (TreeItem<String> child : new ArrayList<>(current.getChildren())) {
+            if (child.getValue().equals(path)) {
+                current.getChildren().remove(child);
+                return;
+            }
+            removeTreeItemRecursive(child, path);
         }
     }
 

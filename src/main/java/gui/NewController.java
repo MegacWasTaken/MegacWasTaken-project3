@@ -32,11 +32,13 @@ public class NewController {
     @FXML
     private TextField path;
     @FXML
-    private TextField keywords;
+    public TextField keywords;
     @FXML
-    private TextField language;
+    public TextField language;
     @FXML
-    private TextArea code;
+    public TextArea code;
+    // @FXML
+    // public TextField createUpdate;
 
     private Stage stage;
 
@@ -70,7 +72,12 @@ public class NewController {
             Snippet snip = new Snippet(keywordsString, languageString, pathString, codeString);
 
             // Update hashmap with inputted values
-            homeController.snippets.put(pathString, snip);
+            AppState.getInstance().getSnippetList().put(pathString, snip);
+
+            System.out.println("Added snippet: " + pathString);
+            for (String key : AppState.getInstance().getSnippetList().keySet()) {
+                System.out.println("Key: " + key);
+            }
 
             homeController.setStage(stage);
 
@@ -94,6 +101,10 @@ public class NewController {
             Parent homeRoot = loader.load();
             HomeScreenController homeController = loader.getController();
             homeController.setStage(stage);
+            System.out.println("current text is " + code.getText());
+            if ((code.getText().isEmpty())) {
+                homeController.removeTreeItem(path.getText());
+            }
 
             stage.setScene(new Scene(homeRoot, 1080, 600));
 
