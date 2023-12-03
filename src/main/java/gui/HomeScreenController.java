@@ -162,7 +162,7 @@ public class HomeScreenController {
                             setContextMenu(null);
                         } else {
                             String folderName = item.substring(item.lastIndexOf("/") + 1);
-                            setText(folderName);
+                            setText("S: " + folderName);
 
                             ContextMenu contextMenu = new ContextMenu();
                             System.out.println("This is all of the keys in the hash map");
@@ -173,6 +173,7 @@ public class HomeScreenController {
 
                             System.out.println("Now, looking for key:" + item + "\"");
                             if (snippets.get(item) == null) {
+                                setText(folderName);
                                 MenuItem newFolderItem = new MenuItem("New Folder");
                                 newFolderItem.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
