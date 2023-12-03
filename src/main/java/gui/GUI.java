@@ -63,7 +63,7 @@ public class GUI extends Application {
         HomeScreenController controllerInstance = loader.getController();
         // somehow this is null?
         controllerInstance.setStage(primaryStage);
-        primaryStage.setTitle("Code Lib");
+        primaryStage.setTitle("CodeLib");
         primaryStage.setScene(new Scene(root, 1080, 600));
         primaryStage.show();
     }

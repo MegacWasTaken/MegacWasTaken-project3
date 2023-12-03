@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -37,8 +38,8 @@ public class NewController {
     public TextField language;
     @FXML
     public TextArea code;
-    // @FXML
-    // public TextField createUpdate;
+    @FXML
+    public Button createUpdate;
 
     private Stage stage;
 

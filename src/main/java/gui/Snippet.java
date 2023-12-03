@@ -6,42 +6,42 @@ public class Snippet {
     private String name;
     private String code;
 
-    public Snippet(String keywords, String language, String name, String code){
+    public Snippet(String keywords, String language, String name, String code) {
         this.keywords = keywords;
         this.language = language;
         this.name = name;
         this.code = code;
     }
 
-    public String getKeywords(){
+    public String getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String keywords){
+    public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
 
-    public String getLanguage(){
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language){
+    public void setLanguage(String language) {
         this.language = language;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    
-    public String getCode(){
+
+    public String getCode() {
         return code;
     }
 
-    public void setCode(String code){
+    public void setCode(String code) {
         this.code = code;
     }
 }

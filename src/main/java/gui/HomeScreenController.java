@@ -191,7 +191,7 @@ public class HomeScreenController {
                 controller.code.setText(currentSnippet.getCode());
                 controller.keywords.setText(currentSnippet.getKeywords());
                 controller.language.setText(currentSnippet.getLanguage());
-                // controller.createUpdate.setText("Update");
+                controller.createUpdate.setText("Update");
             } else {
                 System.out.println("Controller is null");
             }
