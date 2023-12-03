@@ -248,6 +248,11 @@ public class HomeScreenController {
                                             TreeItem<String> newSnippet = getTreeItem();
                                             String snippetName = createNewSnippet(newSnippet);
 
+                                            // null indicates a name wasn't provided, or it didn't meet criteria
+                                            // abort
+                                            if (snippetName == null)
+                                                return;
+
                                             String basePath = System.getProperty("user.dir");
                                             String filePath = basePath + "/src/main/resources/gui/NewGUI.fxml";
 
@@ -359,12 +364,14 @@ public class HomeScreenController {
 
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent()) {
+        if (result.isPresent() && !result.get().trim().isEmpty()) {
+            String userInput = result.get();
+            userInput = userInput.trim();
             SnippetCreationHandler handler = new SnippetCreationHandler(parentFolder);
-            handler.accept(result.get());
+            handler.accept(userInput);
             AppState.getInstance().setTreeRoot(tree.getRoot());
-            return "/" + result.get();
+            return "/" + userInput;
         }
-        return "";
+        return null;
     }
 }
