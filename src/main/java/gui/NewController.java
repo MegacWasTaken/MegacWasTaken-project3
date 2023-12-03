@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
@@ -30,6 +31,13 @@ public class NewController {
 
     @FXML
     private TextField path;
+    @FXML
+    private TextField keywords;
+    @FXML
+    private TextField language;
+    @FXML
+    private TextArea code;
+
     private Stage stage;
 
     public void setStage(Stage passedStage) {
@@ -41,7 +49,36 @@ public class NewController {
     }
 
     public void newSnippetButtonClicked() {
-        System.out.println("hi");
+        try {
+            String basePath = System.getProperty("user.dir");
+            String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";
+
+            File fxmlFile = new File(filePath);
+            URL fxmlLocation = fxmlFile.toURI().toURL();
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+
+            Parent homeRoot = loader.load();
+            HomeScreenController homeController = loader.getController();
+
+            // Collect snippet values provided
+            String keywordsString = keywords.getText();
+            String languageString = language.getText();
+            String pathString = path.getText();
+            String codeString = code.getText();
+
+            Snippet snip = new Snippet(keywordsString, languageString, pathString, codeString);
+
+            // Update hashmap with inputted values
+            homeController.snippets.put(pathString, snip);
+
+            homeController.setStage(stage);
+
+            stage.setScene(new Scene(homeRoot, 1080, 600));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void homeButtonClicked() {
