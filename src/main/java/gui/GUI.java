@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
 
 import javafx.fxml.FXML;
@@ -27,8 +28,10 @@ import javafx.event.EventHandler;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -47,6 +50,23 @@ public class GUI extends Application {
         AppState.loadStateFromFile(basePathLoad);
 
         System.out.println("Done loading");
+
+        // Load database for search results:
+        String basePath2 = System.getProperty("user.dir");
+        basePath2 = basePath2 + "/src/Database.ser";
+
+        File file = new File(basePath2);
+        if (file.exists() && !file.isDirectory()) {
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(basePath2))) {
+                HashMap<String, ArrayList<String>> database = (HashMap<String, ArrayList<String>>) in.readObject();
+                search.BasicSearch.searchArrayList = database;
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No previous AppState found. Initializing new state.");
+            AppState.setInstance(new AppState());
+        }
 
         // Load FXML
         String basePath = System.getProperty("user.dir");

@@ -10,15 +10,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BasicSearch {
 
-    protected static HashMap<String, ArrayList<String>> searchArrayList = new HashMap<String, ArrayList<String>>();
+    public static HashMap<String, ArrayList<String>> searchArrayList = new HashMap<String, ArrayList<String>>();
 
     public static HashMap<String, Snippet> getData() {
         return AppState.getInstance().getSnippetList();
+    }
+
+    public static void updateStoredHashMap(String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(searchArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // takes new set of keywords, distributes to searchArrayList
@@ -28,6 +39,16 @@ public class BasicSearch {
 
         String fullKeywords = language + " " + keywords;
         newKeyWords(fullKeywords);
+        String basePath = System.getProperty("user.dir");
+        basePath = basePath + "/src/Database.ser";
+        updateStoredHashMap(basePath);
+    }
+
+    public static void removeKeywords(String keywords) {
+        for (HashMap.Entry<String, ArrayList<String>> entry : searchArrayList.entrySet()) {
+            ArrayList<String> list = entry.getValue();
+            list.remove(keywords);
+        }
     }
 
     public static void newKeyWords(String keywords) {

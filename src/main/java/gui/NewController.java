@@ -54,6 +54,7 @@ public class NewController {
 
     public void newSnippetButtonClicked() {
         try {
+            save.setText("Save");
             String basePath = System.getProperty("user.dir");
             String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";
 
@@ -105,7 +106,7 @@ public class NewController {
             Parent homeRoot = loader.load();
             HomeScreenController homeController = loader.getController();
             homeController.setStage(stage);
-            if (save.getText().equals("Save") && code.getText().equals("")) {
+            if (!AppState.getInstance().getSnippetList().containsKey(path.getText()) && code.getText().equals("")) {
                 System.out.println("we entered this block");
                 homeController.removeTreeItem(path.getText());
             }

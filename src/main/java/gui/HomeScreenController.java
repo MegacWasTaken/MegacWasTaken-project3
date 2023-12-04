@@ -51,7 +51,7 @@ public class HomeScreenController {
     public TreeView<String> tree;
     @FXML
     public Button searchButton;
-    @FXML 
+    @FXML
     public ComboBox<String> searchBar;
 
     public void setStage(Stage stageParam) {
@@ -164,8 +164,8 @@ public class HomeScreenController {
                 String keywords = searchBar.getValue();
                 String[] keywordsArray = keywords.split(" ");
                 ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
-                //Each index should appear as a separate result
-                for(String result : searchResult){
+                // Each index should appear as a separate result
+                for (String result : searchResult) {
                     searchBar.getItems().clear();
                     searchBar.getItems().add(result);
                 }
@@ -302,6 +302,12 @@ public class HomeScreenController {
                                 @Override
                                 public void handle(ActionEvent event) {
                                     delete(getTreeItem());
+                                    // for each key in the database, remove keywords if exist
+                                    if (AppState.getInstance().getSnippetList().get(item) != null) {
+                                        String keywords = AppState.getInstance().getSnippetList().get(item)
+                                                .getKeywords();
+                                        BasicSearch.removeKeywords(keywords);
+                                    }
                                 }
                             });
 
