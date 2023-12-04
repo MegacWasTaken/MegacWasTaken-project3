@@ -165,10 +165,11 @@ public class HomeScreenController {
                 String[] keywordsArray = keywords.split(" ");
                 ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
                 // Each index should appear as a separate result
+                searchBar.getItems().clear();
                 for (String result : searchResult) {
-                    searchBar.getItems().clear();
                     searchBar.getItems().add(result);
                 }
+                searchBar.show();
             }
         });
 

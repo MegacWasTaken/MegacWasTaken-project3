@@ -74,10 +74,17 @@ public class NewController {
 
             Snippet snip = new Snippet(keywordsString, languageString, pathString, codeString);
 
-            // Update hashmap with inputted values
+            // If update, need to delete old values. Can't modify path, so this will be our
+            // benchmark
+
+            // Ping snippet list to see if it exists
+
+            // If it does, modify values of existing snippet instead of creating new one,
+            // Then replace old keywords from database with new ones
+
+            // Update hashmaps with inputted values
             System.out.println("UPDATING NEW SNIPPET IN NEWCONTROLLER");
             AppState.getInstance().updateSnippetList(pathString, snip);
-
             BasicSearch.distributeSnippet(snip);
 
             for (String key : AppState.getInstance().getSnippetList().keySet()) {

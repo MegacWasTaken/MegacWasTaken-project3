@@ -1,6 +1,7 @@
 package search;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import gui.AppState;
 import gui.Snippet;
@@ -45,19 +46,42 @@ public class BasicSearch {
     }
 
     public static void removeKeywords(String keywords) {
+        System.out.println("State of current keywords list:");
+        // print whole snippet list
+        // for (Map.Entry<String, ArrayList<String>> entry : searchArrayList.entrySet())
+        // {
+        // for(String a : entry.getValue()){
+        // System.out.println(entry.get(a));
+        // }
+        // }
+        System.out.println("Deleting keywords: " + keywords);
         for (HashMap.Entry<String, ArrayList<String>> entry : searchArrayList.entrySet()) {
+            System.out.println("");
+            System.out.println("Searching current keywords list for word: " + entry.getKey() + "\n Keywords list is: "
+                    + entry.getValue() + "\n");
             ArrayList<String> list = entry.getValue();
-            list.remove(keywords);
+            System.out.println("Removing \"" + " " + keywords + "\"from " + entry.getValue());
+            System.out.println("");
+            for (String entryString : entry.getValue()) {
+                System.out.println("Entry contained: \"" + entryString + "\"");
+            }
+            // remove keywords list from ArrayList<String> entry
+            entry.getValue().remove(" " + keywords);
+            System.out.println("After removing, new list is " + list);
         }
+
     }
 
     public static void newKeyWords(String keywords) {
         String[] words = keywords.split(" ");
         for (String word : words) {
+            word = word.trim();
             if (!searchArrayList.containsKey(word)) {
+                System.out.println("putting new word : \"" + word + "\"");
                 searchArrayList.put(word, new ArrayList<>());
+            } else if (!(searchArrayList.get(word).contains(keywords))) {
+                searchArrayList.get(word).add(keywords);
             }
-            searchArrayList.get(word).add(keywords);
         }
     }
 
@@ -67,6 +91,9 @@ public class BasicSearch {
 
         // all of the keywords sets that match the language
         ArrayList<String> matches = searchArrayList.get(keywords[0]);
+        for (String a : matches) {
+            System.out.println("FOUND MATCH for keyword in searchArrayList : " + keywords[0] + ", : \n\t " + a);
+        }
         if (keywords.length == 1)
             return matches;
 
