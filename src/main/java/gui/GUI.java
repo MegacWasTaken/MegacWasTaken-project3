@@ -37,31 +37,28 @@ public class GUI extends Application {
 
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // HomeScreenController is initialized when the fxml is declared because it is
-        // defined there as the controller
         this.primaryStage = primaryStage;
 
+        // Load AppState before loading FXML
+        String basePathLoad = System.getProperty("user.dir") + "/src/AppState.ser";
+        System.out.println("Loading AppState at startup from: " + basePathLoad);
+        AppState.loadStateFromFile(basePathLoad);
+
+        System.out.println("Done loading");
+
+        // Load FXML
         String basePath = System.getProperty("user.dir");
         String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";
         File fxmlFile = new File(filePath);
         URL fxmlLocation = fxmlFile.toURI().toURL();
 
-        // new FXML file from URL from file with full path (assuming user starts at
-        // root)
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         Parent root = loader.load();
 
-        // Make the tree by creating the file explorer items before the button is
-        // pressed (but dont switch screen)
-
+        // Set up the controller
         HomeScreenController controllerInstance = loader.getController();
-        // somehow this is null?
         controllerInstance.setStage(primaryStage);
         primaryStage.setTitle("CodeLib");
         primaryStage.setScene(new Scene(root, 1080, 600));

@@ -1,13 +1,21 @@
 package gui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
-
 import javafx.scene.control.TreeItem;
 
-public class AppState {
+public class AppState implements Serializable {
+
     private static AppState instance = new AppState();
-    private TreeItem<String> treeRoot;
+    private transient TreeItem<String> treeRoot;
     private HashMap<String, Snippet> snippetList;
+    private TreeItemData serializableTree;
 
     private AppState() {
         treeRoot = new TreeItem<>("");
@@ -16,6 +24,10 @@ public class AppState {
 
     public static AppState getInstance() {
         return instance;
+    }
+
+    public static void setInstance(AppState inputInstance) {
+        instance = inputInstance;
     }
 
     public TreeItem<String> getTreeRoot() {
@@ -28,9 +40,85 @@ public class AppState {
 
     public void setTreeRoot(TreeItem<String> root) {
         this.treeRoot = root;
+        String basePath = System.getProperty("user.dir");
+        basePath = basePath + "/src/AppState.ser";
+        saveStateToFile(basePath);
+    }
+
+    public void setLoadingTreeRoot(TreeItem<String> root) {
+        this.treeRoot = root;
     }
 
     public void setSnippetList(HashMap<String, Snippet> updated) {
         snippetList = updated;
+        String basePath = System.getProperty("user.dir");
+        basePath = basePath + "/src/AppState.ser";
+        saveStateToFile(basePath);
+    }
+
+    public TreeItemData getSerializableData() {
+        return serializableTree;
+    }
+
+    public void setSerializableData(TreeItemData data) {
+        serializableTree = data;
+    }
+
+    private static TreeItemData convertToTreeItemData(TreeItem<String> treeItem) {
+        TreeItemData data = new TreeItemData(treeItem.getValue());
+        for (TreeItem<String> child : treeItem.getChildren()) {
+            data.getChildren().add(convertToTreeItemData(child));
+        }
+        return data;
+    }
+
+    private static TreeItem<String> convertToTreeItem(TreeItemData data) {
+        TreeItem<String> treeItem = new TreeItem<>(data.getValue());
+        for (TreeItemData childData : data.getChildren()) {
+            treeItem.getChildren().add(convertToTreeItem(childData));
+        }
+        return treeItem;
+    }
+
+    public void saveStateToFile(String filename) {
+        System.out.println("Saving AppState to file: " + filename);
+        AppState state = AppState.getInstance();
+        TreeItemData rootData = convertToTreeItemData(state.getTreeRoot());
+        state.setSerializableData(rootData);
+
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(state);
+            System.out.println("Saved AppState:");
+            printTree(state.getTreeRoot(), 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadStateFromFile(String filename) {
+        File file = new File(filename);
+        if (file.exists() && !file.isDirectory()) {
+            System.out.println("Loading AppState from file: " + filename);
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+                AppState state = (AppState) in.readObject();
+                TreeItem<String> rootItem = convertToTreeItem(state.getSerializableData());
+                state.setLoadingTreeRoot(rootItem);
+                System.out.println("Loaded AppState:");
+                printTree(rootItem, 0);
+                AppState.setInstance(state);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No previous AppState found. Initializing new state.");
+            AppState.setInstance(new AppState());
+        }
+    }
+
+    private static void printTree(TreeItem<String> item, int depth) {
+        System.out.println(" ".repeat(depth * 2) + item.getValue());
+        for (TreeItem<String> child : item.getChildren()) {
+            printTree(child, depth + 1);
+        }
     }
 }

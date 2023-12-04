@@ -128,6 +128,10 @@ public class HomeScreenController {
 
         // load directory from appstate
         tree.setRoot(AppState.getInstance().getTreeRoot());
+        // String basePathLoad = System.getProperty("user.dir") + "/src/AppState.ser";
+        // System.out.println("Loading AppState at startup from: " + basePathLoad);
+        // AppState.loadStateFromFile(basePathLoad);
+
         // set root of TreeView with AppState singleton
         // Create base example folder
         loadDirectoryStructure();
@@ -220,13 +224,10 @@ public class HomeScreenController {
                             setText("S: " + folderName);
 
                             ContextMenu contextMenu = new ContextMenu();
-                            System.out.println("This is all of the keys in the hash map");
-                            for (String key : AppState.getInstance().getSnippetList().keySet()) {
-                                System.out.println(key);
-                            }
-                            System.out.println("End of keys");
+                            // for (String key : AppState.getInstance().getSnippetList().keySet()) {
+                            // System.out.println(key);
+                            // }
 
-                            System.out.println("Now, looking for key:" + item + "\"");
                             if (AppState.getInstance().getSnippetList().get(item) == null) {
                                 setText(folderName);
                                 MenuItem newFolderItem = new MenuItem("New Folder");
@@ -379,7 +380,6 @@ public class HomeScreenController {
     }
 
     public void removeTreeItem(String path) {
-        System.out.println("hi");
         removeTreeItemRecursive(tree.getRoot(), path);
     }
 

@@ -1,6 +1,8 @@
 package gui;
 
-public class Snippet {
+import java.io.Serializable;
+
+public class Snippet implements Serializable {
     private String keywords;
     private String language;
     private String name;

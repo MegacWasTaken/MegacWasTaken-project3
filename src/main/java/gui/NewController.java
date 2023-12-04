@@ -75,9 +75,9 @@ public class NewController {
             // Update hashmap with inputted values
             AppState.getInstance().getSnippetList().put(pathString, snip);
 
-            System.out.println("Added snippet: " + pathString);
+            // System.out.println("Added snippet: " + pathString);
             for (String key : AppState.getInstance().getSnippetList().keySet()) {
-                System.out.println("Key: " + key);
+                // System.out.println("Key: " + key);
             }
 
             homeController.setStage(stage);
