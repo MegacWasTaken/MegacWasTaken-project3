@@ -74,12 +74,13 @@ public class NewController {
             Snippet snip = new Snippet(keywordsString, languageString, pathString, codeString);
 
             // Update hashmap with inputted values
-            AppState.getInstance().getSnippetList().put(pathString, snip);
+            System.out.println("UPDATING NEW SNIPPET IN NEWCONTROLLER");
+            AppState.getInstance().updateSnippetList(pathString, snip);
+
             BasicSearch.distributeSnippet(snip);
 
-            // System.out.println("Added snippet: " + pathString);
             for (String key : AppState.getInstance().getSnippetList().keySet()) {
-                // System.out.println("Key: " + key);
+                System.out.println("Key: " + key);
             }
 
             homeController.setStage(stage);

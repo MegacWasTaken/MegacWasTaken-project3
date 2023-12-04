@@ -14,18 +14,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BasicSearch {
-    
-    AppState x = new AppState();
 
     protected static HashMap<String, ArrayList<String>> searchArrayList = new HashMap<String, ArrayList<String>>();
-
 
     public static HashMap<String, Snippet> getData() {
         return AppState.getInstance().getSnippetList();
     }
 
     // takes new set of keywords, distributes to searchArrayList
-    public static void distributeSnippet(Snippet snip){
+    public static void distributeSnippet(Snippet snip) {
         String keywords = snip.getKeywords();
         String language = snip.getLanguage();
 
