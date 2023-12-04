@@ -15,11 +15,11 @@
       </Pane>
       <Pane layoutX="13.0" layoutY="55.0" prefHeight="37.0" prefWidth="852.0">
          <children>
-            <TextField fx:id="path" disable="true" layoutY="6.0" prefHeight="25.0" prefWidth="634.0" />
+            <TextField fx:id="path" disable="true" layoutY="11.0" prefHeight="25.0" prefWidth="634.0" />
          </children>
       </Pane>
       <TextArea fx:id="code" layoutX="15.0" layoutY="102.0" prefHeight="490.0" prefWidth="1055.0" promptText="Code Goes Here" />
       <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" />
-      <Button fx:id="createUpdate" layoutX="879.0" layoutY="64.0" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Create" />
+      <Button fx:id="save" layoutX="879.0" layoutY="64.0" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Save" />
    </children>
 </Pane>

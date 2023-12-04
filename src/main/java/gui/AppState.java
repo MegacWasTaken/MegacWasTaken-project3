@@ -17,7 +17,7 @@ public class AppState implements Serializable {
     private HashMap<String, Snippet> snippetList;
     private TreeItemData serializableTree;
 
-    private AppState() {
+    public AppState() {
         treeRoot = new TreeItem<>("");
         snippetList = new HashMap<String, Snippet>();
     }

@@ -9,6 +9,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import search.BasicSearch;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -39,7 +40,7 @@ public class NewController {
     @FXML
     public TextArea code;
     @FXML
-    public Button createUpdate;
+    public Button save;
 
     private Stage stage;
 
@@ -74,6 +75,7 @@ public class NewController {
 
             // Update hashmap with inputted values
             AppState.getInstance().getSnippetList().put(pathString, snip);
+            BasicSearch.distributeSnippet(snip);
 
             // System.out.println("Added snippet: " + pathString);
             for (String key : AppState.getInstance().getSnippetList().keySet()) {
@@ -102,7 +104,7 @@ public class NewController {
             Parent homeRoot = loader.load();
             HomeScreenController homeController = loader.getController();
             homeController.setStage(stage);
-            if (createUpdate.getText().equals("Create") && code.getText().equals("")) {
+            if (save.getText().equals("Save") && code.getText().equals("")) {
                 System.out.println("we entered this block");
                 homeController.removeTreeItem(path.getText());
             }

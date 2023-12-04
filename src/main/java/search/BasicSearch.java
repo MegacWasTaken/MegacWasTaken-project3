@@ -1,39 +1,60 @@
 package search;
 
 import java.util.HashMap;
+
+import gui.AppState;
+import gui.Snippet;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BasicSearch {
+    
+    AppState x = new AppState();
 
-    private HashMap<String, ArrayList<String>> currentData = new HashMap<>();
+    protected static HashMap<String, ArrayList<String>> searchArrayList = new HashMap<String, ArrayList<String>>();
 
-    public HashMap<String, ArrayList<String>> getData() {
-        return currentData;
+
+    public static HashMap<String, Snippet> getData() {
+        return AppState.getInstance().getSnippetList();
     }
 
-    // keywords passed as string, return list of
-    public void newKeyWords(String keywords) {
+    // takes new set of keywords, distributes to searchArrayList
+    public static void distributeSnippet(Snippet snip){
+        String keywords = snip.getKeywords();
+        String language = snip.getLanguage();
+
+        String fullKeywords = language + " " + keywords;
+        newKeyWords(fullKeywords);
+    }
+
+    public static void newKeyWords(String keywords) {
         String[] words = keywords.split(" ");
         for (String word : words) {
-            if (!currentData.containsKey(word)) {
-                currentData.put(word, new ArrayList<>());
+            if (!searchArrayList.containsKey(word)) {
+                searchArrayList.put(word, new ArrayList<>());
             }
-            currentData.get(word).add(keywords);
+            searchArrayList.get(word).add(keywords);
         }
     }
 
-    public ArrayList<String> search(String[] keywords) {
+    public static ArrayList<String> search(String[] keywords) {
         if (keywords == null || keywords.length < 1)
             return null;
 
-        ArrayList<String> matches = currentData.get(keywords[0]);
+        // all of the keywords sets that match the language
+        ArrayList<String> matches = searchArrayList.get(keywords[0]);
         if (keywords.length == 1)
             return matches;
 
         // Cross-comparing
         for (int i = 1; i < keywords.length; i++) {
-            ArrayList<String> newMatches = currentData.get(keywords[i]);
+            ArrayList<String> newMatches = searchArrayList.get(keywords[i]);
             for (int j = 0; j < matches.size(); j++) {
                 boolean matchIndexStays = containsString(newMatches, matches.get(j));
                 // Remove in matches array if not found in keywords list for next keyword
@@ -45,7 +66,7 @@ public class BasicSearch {
         return matches;
     }
 
-    public boolean containsString(ArrayList<String> array, String target) {
+    public static boolean containsString(ArrayList<String> array, String target) {
         for (String element : array) {
             if (element.equals(target)) {
                 return true;
@@ -53,24 +74,4 @@ public class BasicSearch {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        BasicSearch newSearch = new BasicSearch();
-        newSearch.getData().put("hello", new ArrayList<String>(Arrays.asList("hello", "hello program")));
-        newSearch.getData().put("program", new ArrayList<String>(Arrays.asList("hello program", "word program")));
-        newSearch.getData().put("word", new ArrayList<String>(Arrays.asList("word program")));
-
-        // full keywords in database:
-        // hello
-        // hello program
-        // word program
-        ArrayList<String> helloResults = newSearch.search(new String[] { "hello" });
-        System.out.println("Expecting:[hello, hello program]");
-        System.out.println("Returned: " + helloResults);
-
-        ArrayList<String> noResults = newSearch.search(new String[] { "hello progra" });
-        System.out.println("Expecting:null");
-        System.out.println("Returned: " + noResults);
-    }
-
 }

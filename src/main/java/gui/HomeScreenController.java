@@ -14,10 +14,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import search.BasicSearch;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
@@ -36,22 +39,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-//TODO: change create button to "Update" after first time
-//TODO: fix inputting a name and then exiting out creating a non-snippet
-//TODO: check if textdialog optional String is non-null and not empty before moving forward
-
 //THEN:
-//TODO: Read file from local drive when opening
-//TODO: When changes are made, update this file
 //TODO: begin integration with search: build basic search functionality
 
-// TO DO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
+// TODO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
 // AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
     private Stage stage;
+    public Parent fileRoot;
     @FXML
     public TreeView<String> tree;
-    public Parent fileRoot;
+    @FXML
+    public Button searchButton;
+    @FXML 
+    public ComboBox<String> searchBar;
 
     public void setStage(Stage stageParam) {
         stage = stageParam;
@@ -157,6 +158,19 @@ public class HomeScreenController {
             }
         });
 
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String keywords = searchBar.getValue();
+                String[] keywordsArray = keywords.split(" ");
+                ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
+                //Each index should appear as a separate result
+                for(String result : searchResult){
+                    searchBar.getItems().add(result);
+                }
+            }
+        });
+
         // Set visible
         tree.setVisible(true);
     }
@@ -195,7 +209,7 @@ public class HomeScreenController {
                 controller.code.setText(currentSnippet.getCode());
                 controller.keywords.setText(currentSnippet.getKeywords());
                 controller.language.setText(currentSnippet.getLanguage());
-                controller.createUpdate.setText("Update");
+                // controller.save.setText("Update");
             } else {
                 System.out.println("Controller is null");
             }
