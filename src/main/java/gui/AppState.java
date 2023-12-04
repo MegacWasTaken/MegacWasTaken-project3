@@ -58,7 +58,6 @@ public class AppState implements Serializable {
         basePath = basePath + "/src/AppState.ser";
         saveStateToFile(basePath);
         System.out.println("After save, snippet list: ");
-        printAllSnippets();
     }
 
     public TreeItemData getSerializableData() {
@@ -96,7 +95,6 @@ public class AppState implements Serializable {
             System.out.println("Saved AppState:");
             printTree(state.getTreeRoot(), 0);
             System.out.println("After saving state, here is current list of snippets:");
-            printAllSnippets(); 
             System.out.println("End of current list of snippets");
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,15 +125,6 @@ public class AppState implements Serializable {
         System.out.println(" ".repeat(depth * 2) + item.getValue());
         for (TreeItem<String> child : item.getChildren()) {
             printTree(child, depth + 1);
-        }
-    }
-
-    public void printAllSnippets() {
-        System.out.println("Printing all snippets:");
-        for (Map.Entry<String, Snippet> entry : snippetList.entrySet()) {
-            String key = entry.getKey();
-            Snippet snippet = entry.getValue();
-            System.out.println("Key: " + key + ", Snippet: " + snippet);
         }
     }
 
