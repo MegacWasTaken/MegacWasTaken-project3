@@ -23,6 +23,7 @@ import javafx.util.Callback;
 import search.BasicSearch;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -39,6 +40,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 //THEN:
 //TODO: begin integration with search: build basic search functionality
@@ -125,6 +132,32 @@ public class HomeScreenController {
         }
     }
 
+    private void performSearch(final String searchText) {
+        System.out.println("entered");
+        Task<ArrayList<String>> searchTask = new Task<ArrayList<String>>() {
+            @Override
+            protected ArrayList<String> call() throws Exception {
+                String[] keywordsArray = searchText.split(" ");
+                ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
+                Collections.sort(searchResult);
+                return searchResult;
+            }
+        };
+
+        searchTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                ArrayList<String> searchResult = searchTask.getValue();
+                System.out.println("clear activated");
+                searchBar.getItems().addAll(searchResult);
+                searchBar.show();
+            }
+        });
+
+        Thread thread = new Thread(searchTask);
+        thread.start();
+    }
+
     public void initialize() {
         // TO DO : load the directory tree from user's written file to appstate
 
@@ -163,15 +196,17 @@ public class HomeScreenController {
             @Override
             public void handle(ActionEvent event) {
                 String keywords = searchBar.getValue();
-                String[] keywordsArray = keywords.split(" ");
-                ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
-                Collections.sort(searchResult);
-                // Each index should appear as a separate result
-                searchBar.getItems().clear();
-                for (String result : searchResult) {
-                    searchBar.getItems().add(result);
+                performSearch(keywords);
+            }
+        });
+
+        TextField editor = searchBar.getEditor();
+        editor.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.trim().isEmpty()) {
+                    performSearch(newValue);
                 }
-                searchBar.show();
             }
         });
 
