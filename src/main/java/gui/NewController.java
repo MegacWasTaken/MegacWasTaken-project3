@@ -78,9 +78,14 @@ public class NewController {
             // benchmark
 
             // Ping snippet list to see if it exists
-
-            // If it does, modify values of existing snippet instead of creating new one,
-            // Then replace old keywords from database with new ones
+            if (AppState.getInstance().getSnippetList().containsKey(pathString)) {
+                // Snippet already exists
+                // delete existing snippet
+                // delete existing keywords in database
+                String keywordsSnippet = AppState.getInstance().getSnippetList().get(pathString).getKeywords();
+                AppState.getInstance().getSnippetList().remove(pathString);
+                BasicSearch.removeKeywords(keywordsSnippet);
+            }
 
             // Update hashmaps with inputted values
             System.out.println("UPDATING NEW SNIPPET IN NEWCONTROLLER");
