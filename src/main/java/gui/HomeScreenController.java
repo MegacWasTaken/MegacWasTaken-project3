@@ -34,6 +34,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -164,6 +165,7 @@ public class HomeScreenController {
                 String keywords = searchBar.getValue();
                 String[] keywordsArray = keywords.split(" ");
                 ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
+                Collections.sort(searchResult);
                 // Each index should appear as a separate result
                 searchBar.getItems().clear();
                 for (String result : searchResult) {
