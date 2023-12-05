@@ -11,7 +11,7 @@
       <Pane layoutX="270.0" layoutY="6.0" prefHeight="589.0" prefWidth="796.0">
          <children>
             <Button fx:id="searchButton" layoutX="685.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Search" />
-            <ComboBox fx:id="searchBar" editable="true" layoutY="2.0" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" />
+            <ComboBox fx:id="searchBar" editable="true" layoutX="27.0" layoutY="2.0" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" />
          </children>
       </Pane>
    </children>

@@ -195,6 +195,7 @@ public class HomeScreenController {
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                searchBar.setCellFactory(null);
                 String keywords = searchBar.getValue();
                 performSearch(keywords);
             }
