@@ -210,6 +210,7 @@ public class HomeScreenController {
             public void handle(ActionEvent event) {
                 searchBar.setCellFactory(null);
                 String keywords = searchBar.getValue();
+                System.out.println("option a");
                 performSearch(keywords);
             }
         });
@@ -218,7 +219,8 @@ public class HomeScreenController {
         editor.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.trim().isEmpty()) {
+                if (!newValue.trim().isEmpty() && !searchBar.getItems().contains(newValue)) {
+                    System.out.println("option b");
                     performSearch(newValue);
                 }
             }
