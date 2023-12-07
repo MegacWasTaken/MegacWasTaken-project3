@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -207,6 +209,16 @@ public class HomeScreenController {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.trim().isEmpty()) {
                     performSearch(newValue);
+                }
+            }
+        });
+
+        searchBar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String selected = searchBar.getSelectionModel().getSelectedItem();
+                if (selected != null && !selected.isEmpty()) {
+                    System.out.println("we made it to the correct place");
                 }
             }
         });
