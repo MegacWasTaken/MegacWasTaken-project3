@@ -52,12 +52,10 @@ public class AppState implements Serializable {
     }
 
     public void updateSnippetList(String a, Snippet b) {
-        System.out.println("UPDATING THE SNIPPET LIST WITH A NEW SNIPPET NOW!!");
         snippetList.put(a, b);
         String basePath = System.getProperty("user.dir");
         basePath = basePath + "/src/AppState.ser";
         saveStateToFile(basePath);
-        System.out.println("After save, snippet list: ");
     }
 
     public TreeItemData getSerializableData() {
@@ -85,17 +83,12 @@ public class AppState implements Serializable {
     }
 
     public void saveStateToFile(String filename) {
-        System.out.println("Saving AppState to file: " + filename);
         AppState state = AppState.getInstance();
         TreeItemData rootData = convertToTreeItemData(state.getTreeRoot());
         state.setSerializableData(rootData);
 
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(state);
-            System.out.println("Saved AppState:");
-            printTree(state.getTreeRoot(), 0);
-            System.out.println("After saving state, here is current list of snippets:");
-            System.out.println("End of current list of snippets");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,19 +97,15 @@ public class AppState implements Serializable {
     public static void loadStateFromFile(String filename) {
         File file = new File(filename);
         if (file.exists() && !file.isDirectory()) {
-            System.out.println("Loading AppState from file: " + filename);
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
                 AppState state = (AppState) in.readObject();
                 TreeItem<String> rootItem = convertToTreeItem(state.getSerializableData());
                 state.setLoadingTreeRoot(rootItem);
-                System.out.println("Loaded AppState:");
-                printTree(rootItem, 0);
                 AppState.setInstance(state);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("No previous AppState found. Initializing new state.");
             AppState.setInstance(new AppState());
         }
     }

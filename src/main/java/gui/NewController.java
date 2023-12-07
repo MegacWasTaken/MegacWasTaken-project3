@@ -26,7 +26,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 public class NewController {
@@ -88,12 +90,19 @@ public class NewController {
             }
 
             // Update hashmaps with inputted values
-            System.out.println("UPDATING NEW SNIPPET IN NEWCONTROLLER");
             AppState.getInstance().updateSnippetList(pathString, snip);
             BasicSearch.distributeSnippet(snip);
 
+            System.out.println("After distributing snippet, updated keys in AppState: ");
             for (String key : AppState.getInstance().getSnippetList().keySet()) {
-                System.out.println("Key: " + key);
+                System.out.println("\tKey: " + key);
+            }
+
+            System.out.println("After distributing snippet, updated keys in Database (BasicSearch): ");
+            for(Entry<String, ArrayList<String>> entry : BasicSearch.searchArrayList.entrySet()){
+                String key = entry.getKey();
+                ArrayList<String> value = entry.getValue();
+                System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);
             }
 
             homeController.setStage(stage);

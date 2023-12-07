@@ -46,10 +46,7 @@ public class GUI extends Application {
 
         // Load AppState before loading FXML
         String basePathLoad = System.getProperty("user.dir") + "/src/AppState.ser";
-        System.out.println("Loading AppState at startup from: " + basePathLoad);
         AppState.loadStateFromFile(basePathLoad);
-
-        System.out.println("Done loading");
 
         // Load database for search results:
         String basePath2 = System.getProperty("user.dir");
@@ -64,7 +61,6 @@ public class GUI extends Application {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("No previous AppState found. Initializing new state.");
             AppState.setInstance(new AppState());
         }
 

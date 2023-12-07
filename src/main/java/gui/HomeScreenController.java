@@ -135,11 +135,11 @@ public class HomeScreenController {
     }
 
     private void performSearch(final String searchText) {
-        System.out.println("entered");
         Task<ArrayList<String>> searchTask = new Task<ArrayList<String>>() {
             @Override
             protected ArrayList<String> call() throws Exception {
                 String[] keywordsArray = searchText.split(" ");
+
                 ArrayList<String> searchResult = BasicSearch.search(keywordsArray);
                 Collections.sort(searchResult);
                 return searchResult;
@@ -149,10 +149,21 @@ public class HomeScreenController {
         searchTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
+                // System.out.println("entered succeeded");
+
                 ArrayList<String> searchResult = searchTask.getValue();
-                System.out.println("clear activated");
-                searchBar.getItems().addAll(searchResult);
-                searchBar.show();
+                String valueSearch = searchBar.getEditor().getText();
+                searchBar.getItems().clear();
+                if (!searchResult.isEmpty()) {
+                    searchBar.getItems().addAll(searchResult);
+                    searchBar.show();
+                } else {
+                    searchBar.hide(); // Hide the dropdown if no results
+                }
+
+                if (!searchResult.isEmpty()) {
+                    searchBar.setValue(valueSearch);
+                }
             }
         });
 
