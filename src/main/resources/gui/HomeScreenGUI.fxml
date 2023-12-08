@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.Pane?>
 
@@ -12,6 +13,7 @@
          <children>
             <Button fx:id="searchButton" layoutX="685.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Search" />
             <ComboBox fx:id="searchBar" editable="true" layoutX="27.0" layoutY="2.0" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" />
+            <ListView fx:id="searchResultListView" layoutX="27.0" layoutY="26.0" prefHeight="563.0" prefWidth="676.0" />
          </children>
       </Pane>
    </children>

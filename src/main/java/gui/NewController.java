@@ -99,7 +99,7 @@ public class NewController {
             }
 
             System.out.println("After distributing snippet, updated keys in Database (BasicSearch): ");
-            for(Entry<String, ArrayList<String>> entry : BasicSearch.searchArrayList.entrySet()){
+            for (Entry<String, ArrayList<String>> entry : BasicSearch.searchArrayList.entrySet()) {
                 String key = entry.getKey();
                 ArrayList<String> value = entry.getValue();
                 System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);

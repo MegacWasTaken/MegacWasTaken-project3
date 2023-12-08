@@ -19,6 +19,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -41,6 +43,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import javafx.concurrent.Task;
@@ -63,6 +66,8 @@ public class HomeScreenController {
     public Button searchButton;
     @FXML
     public ComboBox<String> searchBar;
+    @FXML
+    public ListView<String> searchResultListView;
 
     public void setStage(Stage stageParam) {
         stage = stageParam;
@@ -134,6 +139,31 @@ public class HomeScreenController {
         }
     }
 
+    public class SearchResultCell extends ListCell<String> {
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                String name = item;
+                int whereSplit = name.lastIndexOf("/");
+                if (whereSplit != -1) {
+                    name = item.substring(whereSplit + 1);
+                }
+                setText(name);
+
+                this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        handleSnippetDoubleClick(item);
+                    }
+                });
+            }
+        }
+    }
+
     private void performSearch(final String searchText) {
         Task<ArrayList<String>> searchTask = new Task<ArrayList<String>>() {
             @Override
@@ -172,13 +202,8 @@ public class HomeScreenController {
     }
 
     public void initialize() {
-        // TO DO : load the directory tree from user's written file to appstate
-
         // load directory from appstate
         tree.setRoot(AppState.getInstance().getTreeRoot());
-        // String basePathLoad = System.getProperty("user.dir") + "/src/AppState.ser";
-        // System.out.println("Loading AppState at startup from: " + basePathLoad);
-        // AppState.loadStateFromFile(basePathLoad);
 
         // set root of TreeView with AppState singleton
         // Create base example folder
@@ -208,10 +233,18 @@ public class HomeScreenController {
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                searchBar.setCellFactory(null);
-                String keywords = searchBar.getValue();
-                System.out.println("option a");
-                performSearch(keywords);
+                String keywordInput = searchBar.getEditor().getText().trim();
+                System.out.println("Now searching for key:" + keywordInput);
+
+                // search all snippets to see if their full keywords list matches this
+                searchResultListView.getItems().clear();
+                for (Entry<String, Snippet> entry : AppState.getInstance().getSnippetList().entrySet()) {
+                    String key = entry.getKey();
+                    Snippet value = entry.getValue();
+                    if (value.getKeywords().equals(keywordInput)) {
+                        searchResultListView.getItems().add(key);
+                    }
+                }
             }
         });
 
@@ -226,17 +259,13 @@ public class HomeScreenController {
             }
         });
 
-        searchBar.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                String selected = searchBar.getSelectionModel().getSelectedItem();
-                if (selected != null && !selected.isEmpty()) {
-                    System.out.println("we made it to the correct place");
-                }
+        // set up ListView for displaying the results
+        searchResultListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            public ListCell<String> call(ListView<String> listView) {
+                return new SearchResultCell();
             }
         });
 
-        // Set visible
         tree.setVisible(true);
     }
 
@@ -269,8 +298,14 @@ public class HomeScreenController {
             if (controller != null) {
                 controller.setStage(stage);
                 controller.setFilePath(path);
-
                 Snippet currentSnippet = AppState.getInstance().getSnippetList().get(path);
+                if (currentSnippet == null) {
+                    System.out.println("The following path was null:" + path);
+                    System.out.println("Here is the list of valid paths: ");
+                    for (String a : AppState.getInstance().getSnippetList().keySet()) {
+                        System.out.println(a);
+                    }
+                }
                 controller.code.setText(currentSnippet.getCode());
                 controller.keywords.setText(currentSnippet.getKeywords());
                 controller.language.setText(currentSnippet.getLanguage());
