@@ -4,17 +4,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
    <children>
-      <TreeView fx:id="tree" layoutX="1.0" layoutY="6.0" prefHeight="589.0" prefWidth="262.0" />
-      <Pane layoutX="270.0" layoutY="6.0" prefHeight="589.0" prefWidth="796.0">
-         <children>
-            <Button fx:id="searchButton" layoutX="685.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Search" />
-            <ComboBox fx:id="searchBar" editable="true" layoutX="27.0" layoutY="2.0" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" />
-            <ListView fx:id="searchResultListView" layoutX="27.0" layoutY="26.0" prefHeight="563.0" prefWidth="676.0" />
-         </children>
-      </Pane>
+      <TreeView fx:id="tree" layoutX="1.0" layoutY="6.0" prefHeight="589.0" prefWidth="262.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="6.0" />
+      <Button fx:id="searchButton" layoutX="951.5999755859375" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Search" AnchorPane.rightAnchor="4.263256414560601E-14" />
+      <ComboBox fx:id="searchBar" editable="true" layoutX="270.0" layoutY="6.0" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" AnchorPane.leftAnchor="269.60000000000014" AnchorPane.rightAnchor="116.40000000000009" />
+      <ListView fx:id="searchResultListView" layoutX="270.0" layoutY="30.0" prefHeight="563.0" prefWidth="676.0" AnchorPane.bottomAnchor="2.7999999999999545" AnchorPane.leftAnchor="269.9999755859376" AnchorPane.rightAnchor="116.79997558593755" AnchorPane.topAnchor="30.399999999999977" />
    </children>
-</Pane>
+</AnchorPane>
