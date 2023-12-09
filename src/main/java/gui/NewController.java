@@ -48,6 +48,8 @@ public class NewController {
 
     public void setStage(Stage passedStage) {
         stage = passedStage;
+        stage.setMinHeight(600);
+        stage.setMinWidth(1080);
     }
 
     public void setFilePath(String path) {

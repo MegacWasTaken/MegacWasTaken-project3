@@ -5,14 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NewController">
+<AnchorPane minHeight="592.8" minWidth="1071.2" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NewController">
    <children>
-      <TextField fx:id="keywords" layoutX="13.0" layoutY="14.0" prefHeight="41.0" prefWidth="852.0" promptText="Keywords" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="205.4000000000001" />
-      <TextField fx:id="language" layoutX="878.0" layoutY="14.0" prefHeight="41.0" prefWidth="190.0" promptText="Language" AnchorPane.rightAnchor="1.5999999999998806" />
-      <TextField fx:id="path" disable="true" layoutX="13.0" layoutY="66.0" prefHeight="25.0" prefWidth="634.0" AnchorPane.leftAnchor="12.800000000000068" AnchorPane.rightAnchor="422.9999999999999" />
-      <TextArea fx:id="code" layoutX="15.0" layoutY="102.0" prefHeight="490.0" prefWidth="1055.0" promptText="Code Goes Here" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.199999999999818" AnchorPane.rightAnchor="0.1999999999998181" AnchorPane.topAnchor="102.0" />
-      <Button layoutX="1021.0" layoutY="67.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" AnchorPane.rightAnchor="0.7999999999999119" />
-      <Button fx:id="save" layoutX="879.0" layoutY="64.0" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Save" AnchorPane.rightAnchor="75.39999999999986" />
+      <TextField fx:id="keywords" layoutX="6.4" layoutY="11.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="852.0" promptText="Keywords" AnchorPane.leftAnchor="6.4" AnchorPane.rightAnchor="212.80000000000007" />
+      <TextField fx:id="language" layoutX="872.8000000000001" layoutY="11.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="190.0" promptText="Language" AnchorPane.rightAnchor="8.0" />
+      <TextField fx:id="path" disable="true" layoutX="6.4" layoutY="63.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="634.0" AnchorPane.leftAnchor="6.4" AnchorPane.rightAnchor="430.4000000000001" />
+      <TextArea fx:id="code" layoutX="8.0" layoutY="99.8" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="1055.0" promptText="Code Goes Here" AnchorPane.bottomAnchor="2.6000000000000227" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.2000000000000455" AnchorPane.topAnchor="99.8" />
+      <Button layoutX="1015.2" layoutY="64.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" AnchorPane.rightAnchor="7.2000000000000455" />
+      <Button fx:id="save" layoutX="872.8000000000001" layoutY="61.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Save" AnchorPane.rightAnchor="82.39999999999998" />
    </children>
 </AnchorPane>

@@ -71,6 +71,8 @@ public class HomeScreenController {
 
     public void setStage(Stage stageParam) {
         stage = stageParam;
+        stage.setMinHeight(600);
+        stage.setMinWidth(1080);
     }
 
     private class FolderCreationHandler implements Consumer<String> {
