@@ -43,6 +43,7 @@ public class NewController {
 
     public void newSnippetButtonClicked() {
         try {
+            language.setEditable(false);
             save.setText("Save");
             String basePath = System.getProperty("user.dir");
             String filePath = basePath + "/src/main/resources/gui/HomeScreenGUI.fxml";
@@ -80,16 +81,17 @@ public class NewController {
             AppState.getInstance().updateSnippetList(pathString, snip);
             BasicSearch.distributeSnippet(snip);
 
-            //System.out.println("After distributing snippet, updated keys in AppState: ");
+            // System.out.println("After distributing snippet, updated keys in AppState: ");
             for (String key : AppState.getInstance().getSnippetList().keySet()) {
-                //System.out.println("\tKey: " + key);
+                // System.out.println("\tKey: " + key);
             }
 
-            //System.out.println("After distributing snippet, updated keys in Database (BasicSearch): ");
+            // System.out.println("After distributing snippet, updated keys in Database
+            // (BasicSearch): ");
             for (Entry<String, ArrayList<String>> entry : BasicSearch.searchArrayList.entrySet()) {
                 String key = entry.getKey();
                 ArrayList<String> value = entry.getValue();
-                //System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);
+                // System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);
             }
 
             homeController.setStage(stage);
@@ -115,7 +117,7 @@ public class NewController {
             HomeScreenController homeController = loader.getController();
             homeController.setStage(stage);
             if (!AppState.getInstance().getSnippetList().containsKey(path.getText()) && code.getText().equals("")) {
-                //System.out.println("we entered this block");
+                // System.out.println("we entered this block");
                 homeController.removeTreeItem(path.getText());
             }
 
