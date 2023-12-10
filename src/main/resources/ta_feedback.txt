@@ -1,0 +1,1 @@
+-Added true thread functionality to the searchbar: the searchbar will update automatically whenever it detects a matching keyword, as opposed to manually hitting the "search" button every time. The "search" button now will search for snippets with matching keywords, which the thread provides in a dropdown under the searchbar.
