@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 import javafx.scene.control.TreeItem;
 
@@ -110,11 +109,11 @@ public class AppState implements Serializable {
         }
     }
 
-    private static void printTree(TreeItem<String> item, int depth) {
-        System.out.println(" ".repeat(depth * 2) + item.getValue());
-        for (TreeItem<String> child : item.getChildren()) {
-            printTree(child, depth + 1);
-        }
-    }
+    // private static void printTree(TreeItem<String> item, int depth) {
+    // //System.out.println(" ".repeat(depth * 2) + item.getValue());
+    // for (TreeItem<String> child : item.getChildren()) {
+    // printTree(child, depth + 1);
+    // }
+    // }
 
 }

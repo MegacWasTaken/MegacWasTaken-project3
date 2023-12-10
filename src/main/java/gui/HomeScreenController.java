@@ -6,15 +6,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,41 +16,25 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import search.BasicSearch;
-import javafx.scene.control.TreeView;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-//THEN:
-//TODO: begin integration with search: build basic search functionality
-
-// TODO: Figure out if we are allowed to use file paths like we are doing now (potential issues with this)
-// AND REPLACE THIS WITH .getResource() option if we can, although VSCode doesn't like this right now and may not be portable
 public class HomeScreenController {
     private Stage stage;
     public Parent fileRoot;
@@ -236,7 +214,7 @@ public class HomeScreenController {
             @Override
             public void handle(ActionEvent event) {
                 String keywordInput = searchBar.getEditor().getText().trim();
-                System.out.println("Now searching for key:" + keywordInput);
+                //System.out.println("Now searching for key:" + keywordInput);
 
                 // search all snippets to see if their full keywords list matches this
                 searchResultListView.getItems().clear();
@@ -255,7 +233,7 @@ public class HomeScreenController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.trim().isEmpty() && !searchBar.getItems().contains(newValue)) {
-                    System.out.println("option b");
+                    //System.out.println("option b");
                     performSearch(newValue);
                 }
             }
@@ -302,10 +280,10 @@ public class HomeScreenController {
                 controller.setFilePath(path);
                 Snippet currentSnippet = AppState.getInstance().getSnippetList().get(path);
                 if (currentSnippet == null) {
-                    System.out.println("The following path was null:" + path);
-                    System.out.println("Here is the list of valid paths: ");
+                    //System.out.println("The following path was null:" + path);
+                    //System.out.println("Here is the list of valid paths: ");
                     for (String a : AppState.getInstance().getSnippetList().keySet()) {
-                        System.out.println(a);
+                        //System.out.println(a);
                     }
                 }
                 controller.code.setText(currentSnippet.getCode());
@@ -313,7 +291,7 @@ public class HomeScreenController {
                 controller.language.setText(currentSnippet.getLanguage());
                 // controller.save.setText("Update");
             } else {
-                System.out.println("Controller is null");
+                //System.out.println("Controller is null");
             }
 
             stage.getScene().setRoot(newRoot);
@@ -385,7 +363,7 @@ public class HomeScreenController {
                                                 controller.setStage(stage);
                                                 controller.setFilePath(item + snippetName);
                                             } else {
-                                                System.out.println("Controller is null");
+                                                //System.out.println("Controller is null");
                                             }
 
                                             stage.getScene().setRoot(newRoot);
@@ -462,7 +440,7 @@ public class HomeScreenController {
                         // This will be added to the HashMap as just the name, since no previous
                         controller.setFilePath(snippetName);
                     } else {
-                        System.out.println("Null controller");
+                        //System.out.println("Null controller");
                     }
 
                     stage.getScene().setRoot(newRoot);

@@ -5,31 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import search.BasicSearch;
-import javafx.scene.control.TreeView;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Map.Entry;
-import java.util.function.Consumer;
 
 public class NewController {
 
@@ -95,16 +80,16 @@ public class NewController {
             AppState.getInstance().updateSnippetList(pathString, snip);
             BasicSearch.distributeSnippet(snip);
 
-            System.out.println("After distributing snippet, updated keys in AppState: ");
+            //System.out.println("After distributing snippet, updated keys in AppState: ");
             for (String key : AppState.getInstance().getSnippetList().keySet()) {
-                System.out.println("\tKey: " + key);
+                //System.out.println("\tKey: " + key);
             }
 
-            System.out.println("After distributing snippet, updated keys in Database (BasicSearch): ");
+            //System.out.println("After distributing snippet, updated keys in Database (BasicSearch): ");
             for (Entry<String, ArrayList<String>> entry : BasicSearch.searchArrayList.entrySet()) {
                 String key = entry.getKey();
                 ArrayList<String> value = entry.getValue();
-                System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);
+                //System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);
             }
 
             homeController.setStage(stage);
@@ -130,7 +115,7 @@ public class NewController {
             HomeScreenController homeController = loader.getController();
             homeController.setStage(stage);
             if (!AppState.getInstance().getSnippetList().containsKey(path.getText()) && code.getText().equals("")) {
-                System.out.println("we entered this block");
+                //System.out.println("we entered this block");
                 homeController.removeTreeItem(path.getText());
             }
 
