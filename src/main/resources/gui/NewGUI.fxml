@@ -9,9 +9,9 @@
    <children>
       <TextField fx:id="keywords" layoutX="6.4" layoutY="11.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="852.0" promptText="Keywords" AnchorPane.leftAnchor="6.4" AnchorPane.rightAnchor="212.80000000000007" />
       <TextField fx:id="language" layoutX="872.8000000000001" layoutY="11.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="190.0" promptText="Language" AnchorPane.rightAnchor="8.0" />
-      <TextField fx:id="path" disable="true" layoutX="6.4" layoutY="63.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="634.0" AnchorPane.leftAnchor="6.4" AnchorPane.rightAnchor="430.4000000000001" />
+      <TextField fx:id="path" disable="true" layoutX="6.4" layoutY="63.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="854.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="212.0" />
       <TextArea fx:id="code" layoutX="8.0" layoutY="99.8" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="1055.0" promptText="Code Goes Here" AnchorPane.bottomAnchor="2.6000000000000227" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="7.2000000000000455" AnchorPane.topAnchor="99.8" />
       <Button layoutX="1015.2" layoutY="64.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="Home" AnchorPane.rightAnchor="7.2000000000000455" />
-      <Button fx:id="save" layoutX="872.8000000000001" layoutY="61.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="116.0" text="Save" AnchorPane.rightAnchor="82.39999999999998" />
+      <Button fx:id="save" layoutX="872.8000000000001" layoutY="61.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClicked" prefHeight="31.0" prefWidth="135.0" text="Save" AnchorPane.rightAnchor="63.0" />
    </children>
 </AnchorPane>

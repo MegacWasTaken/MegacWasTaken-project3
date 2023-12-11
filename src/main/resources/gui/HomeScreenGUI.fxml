@@ -6,11 +6,11 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
+<AnchorPane prefWidth="1063.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
    <children>
-      <TreeView fx:id="tree" layoutX="9.0" layoutY="0.8" prefHeight="596.0" prefWidth="262.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="1.0" />
-      <Button fx:id="searchButton" layoutX="947.4000000000001" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Search" AnchorPane.rightAnchor="4.599999999999909" />
-      <ComboBox fx:id="searchBar" editable="true" layoutX="271.4" layoutY="4.0" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" AnchorPane.leftAnchor="271.4" AnchorPane.rightAnchor="115.79999999999995" />
-      <ListView fx:id="searchResultListView" layoutX="271.4" layoutY="28.0" prefHeight="563.0" prefWidth="676.0" AnchorPane.bottomAnchor="4.7999999999999545" AnchorPane.leftAnchor="271.4" AnchorPane.rightAnchor="115.79999999999995" AnchorPane.topAnchor="28.0" />
+      <TreeView fx:id="tree" layoutX="9.0" prefHeight="626.0" prefWidth="263.0" AnchorPane.bottomAnchor="3.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="searchButton" layoutX="947.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Search" AnchorPane.rightAnchor="4.7999999999999545" />
+      <ComboBox fx:id="searchBar" editable="true" layoutX="271.2" prefHeight="25.0" prefWidth="676.0" promptText="KeywordA KeywordB KeywordC" AnchorPane.leftAnchor="271.2" AnchorPane.rightAnchor="116.0" />
+      <ListView fx:id="searchResultListView" layoutX="271.2" layoutY="24.6" prefHeight="594.0" prefWidth="676.0" AnchorPane.bottomAnchor="3.3999999999999773" AnchorPane.leftAnchor="271.2" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="24.6" />
    </children>
 </AnchorPane>
