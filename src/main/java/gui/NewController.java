@@ -104,6 +104,7 @@ public class NewController {
 
             created = true;
 
+
             homeController.setStage(stage);
 
             stage.setScene(new Scene(homeRoot, 1080, 600));
