@@ -31,8 +31,7 @@ public class BasicSearch {
         // System.out.println("now distributing: " + keywords);
         String language = snip.getLanguage();
 
-        String fullKeywords = language + " " + keywords;
-        newKeyWords(fullKeywords);
+        newKeyWords(keywords);
         String basePath = System.getProperty("user.dir");
         basePath = basePath + "/src/Database.ser";
         updateStoredHashMap(basePath);

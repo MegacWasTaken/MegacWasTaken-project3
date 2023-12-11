@@ -31,6 +31,8 @@ public class NewController {
 
     private Stage stage;
 
+    static boolean created = false;
+
     public void setStage(Stage passedStage) {
         stage = passedStage;
         stage.setMinHeight(600);
@@ -61,6 +63,12 @@ public class NewController {
             String languageString = language.getText();
             String pathString = path.getText();
             String codeString = code.getText();
+
+            if (created == false) {
+                if (!languageString.trim().isEmpty()) {
+                    keywordsString = languageString + " " + keywordsString;
+                }
+            }
 
             Snippet snip = new Snippet(keywordsString, languageString, pathString, codeString);
 
@@ -93,6 +101,8 @@ public class NewController {
                 ArrayList<String> value = entry.getValue();
                 // System.out.println("\t \t Key: " + key + "\n\t\t Value: " + value);
             }
+
+            created = true;
 
             homeController.setStage(stage);
 

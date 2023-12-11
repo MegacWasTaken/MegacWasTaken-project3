@@ -221,6 +221,8 @@ public class HomeScreenController {
                 for (Entry<String, Snippet> entry : AppState.getInstance().getSnippetList().entrySet()) {
                     String key = entry.getKey();
                     Snippet value = entry.getValue();
+                    System.out.println("Current keywords is<" + value.getKeywords() + ">");
+                    System.out.println("Comparing against ours which is<" + keywordInput + ">");
                     if (value.getKeywords().equals(keywordInput)) {
                         searchResultListView.getItems().add(key);
                     }
