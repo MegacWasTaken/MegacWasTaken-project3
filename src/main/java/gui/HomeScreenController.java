@@ -388,6 +388,13 @@ public class HomeScreenController {
                                         System.out.println("Item is " + item);
                                         String keywords = AppState.getInstance().getSnippetList().get(item)
                                                 .getKeywords();
+                                        if (!AppState.getInstance().getSnippetList().get(item).getLanguage()
+                                                .isEmpty()) {
+                                            keywords = AppState.getInstance().getSnippetList().get(item).getLanguage()
+                                                    + " " + keywords;
+                                        }
+
+                                        // System.out.println("Removing full keywords:" + keywords);
                                         BasicSearch.removeKeywords(keywords);
                                         AppState.getInstance().getSnippetList().remove(item);
 

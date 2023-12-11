@@ -41,16 +41,12 @@ public class BasicSearch {
     public static void removeKeywords(String keywords) {
         // System.out.println("State of current keywords list:");
         // print whole snippet list
-        // for (Map.Entry<String, ArrayList<String>> entry : searchArrayList.entrySet())
-        // {
-        // for(String a : entry.getValue()){
-        // System.out.println(entry.get(a));
-        // }
-        // }
-        // System.out.println("Deleting keywords: " + keywords);
+        System.out.println("Removing keywords<" + keywords + ">");
         for (HashMap.Entry<String, ArrayList<String>> entry : searchArrayList.entrySet()) {
-            //System.out.println("Now removing now:" + keywords);
+            // Print the key and its associated list
+            System.out.println("Key: " + entry.getKey() + ", List: " + entry.getValue());
             entry.getValue().remove(" " + keywords);
+            entry.getValue().remove(keywords);
         }
         String basePath = System.getProperty("user.dir");
         basePath = basePath + "/src/Database.ser";
