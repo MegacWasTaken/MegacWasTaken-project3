@@ -82,6 +82,7 @@ public class AppState implements Serializable {
     }
 
     public void saveStateToFile(String filename) {
+        System.out.println("Saving");
         AppState state = AppState.getInstance();
         TreeItemData rootData = convertToTreeItemData(state.getTreeRoot());
         state.setSerializableData(rootData);

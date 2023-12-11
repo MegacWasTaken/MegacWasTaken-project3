@@ -214,7 +214,7 @@ public class HomeScreenController {
             @Override
             public void handle(ActionEvent event) {
                 String keywordInput = searchBar.getEditor().getText().trim();
-                //System.out.println("Now searching for key:" + keywordInput);
+                // System.out.println("Now searching for key:" + keywordInput);
 
                 // search all snippets to see if their full keywords list matches this
                 searchResultListView.getItems().clear();
@@ -233,7 +233,7 @@ public class HomeScreenController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.trim().isEmpty() && !searchBar.getItems().contains(newValue)) {
-                    //System.out.println("option b");
+                    // System.out.println("option b");
                     performSearch(newValue);
                 }
             }
@@ -280,10 +280,10 @@ public class HomeScreenController {
                 controller.setFilePath(path);
                 Snippet currentSnippet = AppState.getInstance().getSnippetList().get(path);
                 if (currentSnippet == null) {
-                    //System.out.println("The following path was null:" + path);
-                    //System.out.println("Here is the list of valid paths: ");
+                    // System.out.println("The following path was null:" + path);
+                    // System.out.println("Here is the list of valid paths: ");
                     for (String a : AppState.getInstance().getSnippetList().keySet()) {
-                        //System.out.println(a);
+                        // System.out.println(a);
                     }
                 }
                 controller.code.setText(currentSnippet.getCode());
@@ -291,7 +291,7 @@ public class HomeScreenController {
                 controller.language.setText(currentSnippet.getLanguage());
                 // controller.save.setText("Update");
             } else {
-                //System.out.println("Controller is null");
+                // System.out.println("Controller is null");
             }
 
             stage.getScene().setRoot(newRoot);
@@ -363,7 +363,7 @@ public class HomeScreenController {
                                                 controller.setStage(stage);
                                                 controller.setFilePath(item + snippetName);
                                             } else {
-                                                //System.out.println("Controller is null");
+                                                // System.out.println("Controller is null");
                                             }
 
                                             stage.getScene().setRoot(newRoot);
@@ -380,12 +380,20 @@ public class HomeScreenController {
                             delete.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
+                                    String path = getTreeItem().getValue();
+                                    System.out.println("Path is: " + path);
                                     delete(getTreeItem());
                                     // for each key in the database, remove keywords if exist
                                     if (AppState.getInstance().getSnippetList().get(item) != null) {
+                                        System.out.println("Item is " + item);
                                         String keywords = AppState.getInstance().getSnippetList().get(item)
                                                 .getKeywords();
                                         BasicSearch.removeKeywords(keywords);
+                                        AppState.getInstance().getSnippetList().remove(item);
+
+                                        String basePath = System.getProperty("user.dir");
+                                        basePath = basePath + "/src/AppState.ser";
+                                        AppState.getInstance().saveStateToFile(basePath);
                                     }
                                 }
                             });
@@ -440,7 +448,7 @@ public class HomeScreenController {
                         // This will be added to the HashMap as just the name, since no previous
                         controller.setFilePath(snippetName);
                     } else {
-                        //System.out.println("Null controller");
+                        // System.out.println("Null controller");
                     }
 
                     stage.getScene().setRoot(newRoot);
