@@ -64,7 +64,7 @@ public class NewController {
             String pathString = path.getText();
             String codeString = code.getText();
 
-            if (created == false) {
+            if (!AppState.getInstance().getSnippetList().containsKey(pathString)) {
                 if (!languageString.trim().isEmpty()) {
                     keywordsString = languageString + " " + keywordsString;
                 }
@@ -103,7 +103,6 @@ public class NewController {
             }
 
             created = true;
-
 
             homeController.setStage(stage);
 
